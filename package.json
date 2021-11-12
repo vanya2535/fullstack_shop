@@ -1,5 +1,5 @@
 {
-  "name": "fullstack_shop",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,6 +11,7 @@
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
+    "vuetify": "^2.4.0",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
@@ -25,24 +26,19 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^4.12.0",
+    "postcss-html": "^1.2.0",
+    "postcss-scss": "^4.0.2",
     "prettier": "^2.2.1",
-    "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended",
-      "@vue/prettier"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "stylelint": "^14.0.1",
+    "stylelint-config-standard-scss": "^2.0.1",
+    "stylelint-declaration-block-no-ignored-properties": "^2.5.0",
+    "stylelint-order": "^5.0.0",
+    "stylelint-scss": "^4.0.0",
+    "vue-cli-plugin-vuetify": "~2.4.3",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.7.0"
   },
   "browserslist": [
     "> 1%",

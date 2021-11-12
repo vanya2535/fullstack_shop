@@ -1,4 +1,4 @@
-# fullstack_shop
+# frontend
 
 ## Project setup
 ```
