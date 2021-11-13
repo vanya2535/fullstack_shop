@@ -1,5 +1,5 @@
 <template>
-  <button class="enter-button" @click="$emit('click')">
+  <button class="enter-button" v-on="$listeners">
     <h6>{{ innerText }}</h6>
   </button>
 </template>

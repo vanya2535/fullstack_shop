@@ -15,21 +15,16 @@
         class="input__eye-button"
         @click="switchCurrentType"
       >
-        <Eye v-if="currentType === 'password'" width="24" />
-        <EyeNo v-else width="24" />
+        <SvgIcon v-if="currentType === 'password'" name="eye" />
+        <SvgIcon v-else name="eye-no" width="24" />
       </button>
     </div>
   </div>
 </template>
 
 <script>
-import Eye from '@/assets/sprite/eye.svg'
-import EyeNo from '@/assets/sprite/eye-no.svg'
-
 export default {
   name: 'Input',
-
-  components: { Eye, EyeNo },
 
   props: {
     type: {
