@@ -1,5 +1,5 @@
 export default {
-  IS_LOGGED() {
-    return false
+  IS_LOGGED(state) {
+    return state.username ? true : false
   }
 }

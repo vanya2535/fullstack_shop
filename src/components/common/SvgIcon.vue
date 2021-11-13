@@ -31,7 +31,6 @@ export default {
 
   computed: {
     dynamicIcon() {
-      console.log(`../../assets/sprite/${this.name}.svg`)
       return require(`../../assets/sprite/${this.name}.svg`)
     }
   }

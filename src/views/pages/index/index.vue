@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <header class="index__header">
-      <img width="261" src="../../../assets/img/logo.svg" />
+      <Logo width="261" />
       <p>We always care customers</p>
     </header>
     <main class="index__main">
@@ -17,13 +17,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import EnterButton from '@/components/index/UI/EnterButton.vue'
 import EnterModal from '@/components/index/EnterModal.vue'
-import { mapGetters } from 'vuex'
+import Logo from '@/assets/img/logo.svg'
 
 export default {
   name: 'Index',
-  components: { EnterButton, EnterModal },
+  components: { EnterButton, EnterModal, Logo },
 
   data: () => ({
     isEnterModalVisible: false

@@ -6,7 +6,7 @@
       </template>
 
       <template #main>
-        <form class="modal__form" @submit.prevent>
+        <form class="modal__form" @submit.prevent="onSubmit">
           <Input v-model="formdata.username" label="Username" />
           <Input v-model="formdata.password" type="password" label="Password" />
           <Input
@@ -21,7 +21,7 @@
 
       <template #footer>
         <div class="modal__footer">
-          <Button>Enter</Button>
+          <Button @click="onSubmit">Enter</Button>
           <Button type="text" @click="isRegistred = !isRegistred">
             {{ switchButtonText(!isRegistred) }}
           </Button>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'EnterModal',
 
@@ -51,15 +53,30 @@ export default {
 
     formdata: {
       username: '',
-      password: ''
+      password: '',
+      roleId: '619017b123d430f2b4f912a5'
     },
 
     confirmPassword: ''
   }),
 
   methods: {
+    ...mapActions('user', ['REGISTER', 'LOGIN']),
+
     switchButtonText(isRegistred) {
       return isRegistred ? 'Login' : 'Register'
+    },
+
+    async onSubmit() {
+      try {
+        if (this.isRegistred) {
+          await this.LOGIN(this.formdata)
+        } else {
+          await this.REGISTER(this.formdata)
+        }
+      } catch (e) {
+        console.log(e.response)
+      }
     }
   },
 
