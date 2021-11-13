@@ -1,9 +1,7 @@
 <template>
-  <v-app>
-    <v-main>
-      <router-view />
-    </v-main>
-  </v-app>
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
 <script>
@@ -11,3 +9,7 @@ export default {
   name: 'App'
 }
 </script>
+
+<style lang="scss" scoped>
+@import url('./assets/scss/core/app.scss');
+</style>
