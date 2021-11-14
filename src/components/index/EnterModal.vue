@@ -115,6 +115,7 @@ export default {
         try {
           if (this.loginMode) {
             await this.LOGIN(this.formdata)
+            this.$router.push({ name: 'Main' })
           } else {
             if (this.seller) {
               this.formdata.roleId = '6190181ac34f6215fde4bff9'
@@ -123,6 +124,7 @@ export default {
             }
 
             await this.REGISTER(this.formdata)
+            this.$router.push({ name: 'Main' })
           }
         } catch ({ response }) {
           console.log(response)

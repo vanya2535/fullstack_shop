@@ -37,7 +37,7 @@ export default {
   methods: {
     enterButtonClick() {
       if (this.IS_LOGGED) {
-        //
+        this.$router.push({ name: 'Main' })
       } else {
         this.isEnterModalVisible = true
       }
