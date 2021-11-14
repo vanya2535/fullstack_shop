@@ -121,10 +121,24 @@ export default {
   watch: {
     value(value) {
       this.dialog = value
+      if (value) {
+        this.formdata = {
+          username: '',
+          password: '',
+          roleId: '619017b123d430f2b4f912a5'
+        }
+        this.confirmPassword = ''
+      }
     },
 
     dialog(value) {
       this.$emit('input', value)
+    },
+
+    loginMode(value) {
+      if (!value) {
+        this.confirmPassword = ''
+      }
     }
   }
 }
