@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import store from '@/store'
 import Index from '@/views/pages/index/index'
 import Main from '@/views/pages/main/index'
+import Profile from '@/views/pages/profile/index'
 
 Vue.use(VueRouter)
 
@@ -19,6 +20,14 @@ const routes = [
     path: '/main',
     name: 'Main',
     component: Main,
+    meta: {
+      auth: true
+    }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
     meta: {
       auth: true
     }

@@ -7,10 +7,8 @@ export default {
   },
 
   LOGOUT(state) {
-    state = {
-      _id: '',
-      username: '',
-      role: null
+    for (let key of ['_id', 'username', 'role']) {
+      state[key] = null
     }
     localStorage.removeItem('user')
   }

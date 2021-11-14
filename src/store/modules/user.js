@@ -4,8 +4,8 @@ import userGetters from './getters/userGetters.js'
 
 export default {
   state: () => ({
-    _id: '',
-    username: '',
+    _id: null,
+    username: null,
     role: null
   }),
   actions: userActions,
