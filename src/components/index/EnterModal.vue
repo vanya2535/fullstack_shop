@@ -2,18 +2,33 @@
   <Dialog v-model="dialog">
     <Card>
       <template #header class="modal__header">
-        <h5 class="modal__title">{{ switchButtonText(isRegistred) }}</h5>
+        <h5 class="modal__title">{{ switchButtonText(loginMode) }}</h5>
       </template>
 
       <template #main>
-        <form class="modal__form" @submit.prevent="onSubmit">
-          <Input v-model="formdata.username" label="Username" />
-          <Input v-model="formdata.password" type="password" label="Password" />
+        <form class="modal__form" @submit.prevent>
           <Input
-            v-if="!isRegistred"
+            v-model="formdata.username"
+            label="Username"
+            :error="errors.username"
+            @input="resetErrors('username')"
+          />
+
+          <Input
+            v-model="formdata.password"
+            type="password"
+            label="Password"
+            :error="errors.password"
+            @input="resetErrors('password')"
+          />
+
+          <Input
+            v-if="!loginMode"
             v-model="confirmPassword"
             type="password"
             label="Confirm password"
+            :error="errors.confirmPassword"
+            @input="resetErrors('confirmPassword')"
           >
           </Input>
         </form>
@@ -22,8 +37,8 @@
       <template #footer>
         <div class="modal__footer">
           <Button @click="onSubmit">Enter</Button>
-          <Button type="text" @click="isRegistred = !isRegistred">
-            {{ switchButtonText(!isRegistred) }}
+          <Button type="text" @click="loginMode = !loginMode">
+            {{ switchButtonText(!loginMode) }}
           </Button>
         </div>
       </template>
@@ -33,9 +48,12 @@
 
 <script>
 import { mapActions } from 'vuex'
+import errors from '@/mixins/errors.js'
 
 export default {
   name: 'EnterModal',
+
+  mixins: [errors],
 
   props: {
     value: {
@@ -46,10 +64,7 @@ export default {
 
   data: () => ({
     dialog: false,
-    isRegistred: true,
-
-    passwordField: false,
-    confirmPasswordField: false,
+    loginMode: true,
 
     formdata: {
       username: '',
@@ -57,25 +72,41 @@ export default {
       roleId: '619017b123d430f2b4f912a5'
     },
 
-    confirmPassword: ''
+    confirmPassword: '',
+
+    errors: {
+      username: null,
+      password: null,
+      roleId: null,
+      confirmPassword: null
+    }
   }),
 
   methods: {
     ...mapActions('user', ['REGISTER', 'LOGIN']),
 
-    switchButtonText(isRegistred) {
-      return isRegistred ? 'Login' : 'Register'
+    switchButtonText(loginMode) {
+      return loginMode ? 'Login' : 'Register'
     },
 
     async onSubmit() {
-      try {
-        if (this.isRegistred) {
-          await this.LOGIN(this.formdata)
-        } else {
-          await this.REGISTER(this.formdata)
+      this.resetErrors()
+      if (!this.loginMode && this.formdata.password !== this.confirmPassword) {
+        this.setErrors({
+          field: 'confirmPassword',
+          message: 'Passwords must be an equal'
+        })
+      } else {
+        try {
+          if (this.loginMode) {
+            await this.LOGIN(this.formdata)
+          } else {
+            await this.REGISTER(this.formdata)
+          }
+        } catch ({ response }) {
+          console.log(response)
+          this.setErrors(response.data)
         }
-      } catch (e) {
-        console.log(e.response)
       }
     }
   },

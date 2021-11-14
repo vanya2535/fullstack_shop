@@ -2,3 +2,8 @@
   border: 1px solid $primary;
   box-shadow: 0 4px 4px $shadow;
 }
+
+@mixin error-border {
+  border: 1px solid $error;
+  box-shadow: 0 4px 4px $shadow;
+}

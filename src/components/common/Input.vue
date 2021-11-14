@@ -1,15 +1,20 @@
 <template>
-  <div>
-    <label v-if="content" class="input__label">
-      {{ label }}
+  <div :class="{ input__wrapper: !(error || content) }">
+    <label
+      v-if="content || error"
+      :class="`input__label${error ? '_error' : ''}`"
+    >
+      {{ error ? error : label }}
     </label>
+
     <div class="input__body">
       <input
         v-model="content"
-        class="input"
+        :class="`input${error ? '_error' : ''}`"
         :type="type === 'password' ? currentType : type"
         :placeholder="label"
       />
+
       <button
         v-if="type === 'password'"
         class="input__eye-button"
@@ -40,6 +45,11 @@ export default {
     value: {
       type: String,
       required: true
+    },
+
+    error: {
+      type: String,
+      default: ''
     }
   },
 
@@ -78,13 +88,33 @@ export default {
   height: 36px;
   font-size: 18px;
 
+  &_error {
+    @include error-border;
+
+    border-radius: 4px;
+    padding: 6px 8px;
+    width: 100%;
+    height: 36px;
+    font-size: 18px;
+  }
+
   &::placeholder {
     color: $primary;
   }
 
+  &__wrapper {
+    margin-top: 15.4px;
+  }
+
   &__label {
+    margin-bottom: 2px;
+    font-size: 14px;
     text-transform: capitalize;
     color: $primary;
+
+    &_error {
+      color: $error;
+    }
   }
 
   &__body {
