@@ -32,10 +32,12 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isLogged = JSON.stringify(localStorage.getItem('user'))
+  const isLogged = JSON.parse(localStorage.getItem('user'))
+  const routeNames = routes.map((route) => route.name)
+
   if (!isLogged && to.meta.auth) {
     next({ name: 'Index' })
-  } else if (to.name) {
+  } else if (routeNames.includes(to.name)) {
     next()
   } else {
     next({ name: 'Index' })
