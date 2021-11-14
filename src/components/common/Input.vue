@@ -2,7 +2,7 @@
   <div :class="{ input__wrapper: !(error || content) }">
     <label
       v-if="content || error"
-      :class="`input__label${error ? '_error' : ''}`"
+      :class="`input__label` + ' ' + `${error ? 'input__label_error' : ''}`"
     >
       {{ error ? error : label }}
     </label>
@@ -108,8 +108,9 @@ export default {
 
   &__label {
     margin-bottom: 2px;
+    width: 100%;
     font-size: 14px;
-    text-transform: capitalize;
+    word-break: break-word;
     color: $primary;
 
     &_error {
