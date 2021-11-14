@@ -36,7 +36,11 @@
 
       <template #footer>
         <div class="modal__footer">
-          <Button @click="onSubmit">Enter</Button>
+          <Button style="width: 59px" @click="onSubmit">
+            <template v-if="!processing">Enter</template>
+            <SpinLoading v-else />
+          </Button>
+
           <Button type="text" @click="loginMode = !loginMode">
             {{ switchButtonText(!loginMode) }}
           </Button>
@@ -65,6 +69,7 @@ export default {
   data: () => ({
     dialog: false,
     loginMode: true,
+    processing: false,
 
     formdata: {
       username: '',
@@ -90,6 +95,7 @@ export default {
     },
 
     async onSubmit() {
+      this.processing = true
       this.resetErrors()
       if (!this.loginMode && this.formdata.password !== this.confirmPassword) {
         this.setErrors({
@@ -108,6 +114,7 @@ export default {
           this.setErrors(response.data)
         }
       }
+      this.processing = false
     }
   },
 
