@@ -3,12 +3,19 @@ const { validationResult } = require('express-validator')
 const User = require('../models/User.js')
 const Role = require('../models/Role.js')
 
+function standartedErrors(errors) {
+  return errors.errors.map((e) => ({
+    field: e.param,
+    message: e.msg
+  }))
+}
+
 class authController {
   async register(req, resp) {
     try {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        return resp.status(400).json(errors)
+        return resp.status(400).json(standartedErrors(errors))
       }
 
       const { username, password, roleId } = req.body
@@ -45,7 +52,7 @@ class authController {
     try {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        return resp.status(400).json(errors)
+        return resp.status(400).json(standartedErrors(errors))
       }
 
       const { username, password } = req.body
