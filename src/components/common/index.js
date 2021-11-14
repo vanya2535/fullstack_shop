@@ -4,5 +4,6 @@ import Button from './Button.vue'
 import Input from './Input.vue'
 import SvgIcon from './SvgIcon.vue'
 import SpinLoading from './SpinLoading.vue'
+import ToggleSwitch from './ToggleSwitch.vue'
 
-export default [Dialog, Card, Button, Input, SvgIcon, SpinLoading]
+export default [Dialog, Card, Button, Input, SvgIcon, SpinLoading, ToggleSwitch]
