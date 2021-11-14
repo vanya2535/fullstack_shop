@@ -10,6 +10,14 @@ function standartedErrors(errors) {
   }))
 }
 
+function standartedUser(user) {
+  return {
+    _id: user._id,
+    username: user.username,
+    role: user.role
+  }
+}
+
 class authController {
   async register(req, resp) {
     try {
@@ -41,7 +49,7 @@ class authController {
         role: role.value
       })
       await user.save()
-      return resp.json(user)
+      return resp.json(standartedUser(user))
     } catch (e) {
       console.log(e)
       return resp.status(400).json({ message: 'Error during registration' })
@@ -69,7 +77,7 @@ class authController {
           .status(400)
           .json({ field: 'password', message: 'Wrong password' })
       }
-      return resp.json({ user })
+      return resp.json({ ...standartedUser(user) })
     } catch (e) {
       console.log(e)
       return resp.status(400).json({ message: 'Error during logining' })
