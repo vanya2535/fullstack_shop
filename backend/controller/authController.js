@@ -29,7 +29,6 @@ class authController {
         password: hashPassword,
         role: role.value
       })
-      user.populate('role')
       await user.save()
       return resp.json(user)
     } catch (e) {
