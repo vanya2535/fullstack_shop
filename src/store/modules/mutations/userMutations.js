@@ -4,5 +4,14 @@ export default {
       state[key] = data[key]
     }
     localStorage.setItem('user', JSON.stringify(state))
+  },
+
+  LOGOUT(state) {
+    state = {
+      _id: '',
+      username: '',
+      role: null
+    }
+    localStorage.removeItem('user')
   }
 }
