@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '@/store'
 import Index from '@/views/pages/index/index'
+import Main from '@/views/pages/main/index'
 
 Vue.use(VueRouter)
 
@@ -13,6 +14,14 @@ const routes = [
     meta: {
       auth: false
     }
+  },
+  {
+    path: '/main',
+    name: 'Main',
+    component: Main,
+    meta: {
+      auth: true
+    }
   }
 ]
 
@@ -23,7 +32,8 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (!store.getters['user/IS_LOGGED'] && to.meta.auth) {
+  const isLogged = JSON.stringify(localStorage.getItem('user'))
+  if (!isLogged && to.meta.auth) {
     next({ name: 'Index' })
   } else if (to.name) {
     next()

@@ -5,8 +5,21 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
-  name: 'App'
+  name: 'App',
+
+  methods: {
+    ...mapMutations('user', ['SET_USER_DATA'])
+  },
+
+  mounted() {
+    const userData = JSON.parse(localStorage.getItem('user'))
+    if (userData) {
+      this.SET_USER_DATA(userData)
+    }
+  }
 }
 </script>
 
