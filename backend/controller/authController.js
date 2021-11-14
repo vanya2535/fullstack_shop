@@ -15,12 +15,16 @@ class authController {
 
       const candidate = await User.findOne({ username })
       if (candidate) {
-        return resp.status(400).json({ message: 'User already exists' })
+        return resp
+          .status(400)
+          .json({ field: 'username', message: 'User already exists' })
       }
 
       const role = await Role.findOne({ _id: roleId })
       if (!role) {
-        return resp.status(400).json({ message: 'Wrong user role' })
+        return resp
+          .status(400)
+          .json({ field: 'roleId', message: 'Wrong user role' })
       }
 
       const hashPassword = bcrypt.hashSync(password, 7)
@@ -48,11 +52,15 @@ class authController {
 
       const user = await User.findOne({ username })
       if (!user) {
-        return resp.status(400).json({ message: 'User aren`t exists' })
+        return resp
+          .status(400)
+          .json({ field: 'username', message: 'User aren`t exists' })
       }
 
       if (!bcrypt.compareSync(password, user.password)) {
-        return resp.status(400).json({ message: 'Wrong password' })
+        return resp
+          .status(400)
+          .json({ field: 'password', message: 'Wrong password' })
       }
       return resp.json({ user })
     } catch (e) {
