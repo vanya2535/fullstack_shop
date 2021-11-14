@@ -5,5 +5,15 @@ import Input from './Input.vue'
 import SvgIcon from './SvgIcon.vue'
 import SpinLoading from './SpinLoading.vue'
 import ToggleSwitch from './ToggleSwitch.vue'
+import FooterNavbar from './FooterNavbar.vue'
 
-export default [Dialog, Card, Button, Input, SvgIcon, SpinLoading, ToggleSwitch]
+export default [
+  Dialog,
+  Card,
+  Button,
+  Input,
+  SvgIcon,
+  SpinLoading,
+  ToggleSwitch,
+  FooterNavbar
+]

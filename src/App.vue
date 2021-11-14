@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view />
+    <FooterNavbar v-if="$route.name !== 'Index'" />
   </div>
 </template>
 

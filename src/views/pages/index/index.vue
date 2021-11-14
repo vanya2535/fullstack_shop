@@ -66,7 +66,7 @@ export default {
     padding: 20px;
     box-shadow: 0 4px 4px $shadow;
     text-align: center;
-    background: $backgroundPrimary;
+    background: $background-primary;
   }
 
   &__description {
