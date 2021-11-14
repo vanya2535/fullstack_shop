@@ -24,7 +24,12 @@ class authController {
       }
 
       const hashPassword = bcrypt.hashSync(password, 7)
-      const user = await new User({ username, password: hashPassword, role })
+      const user = await new User({
+        username,
+        password: hashPassword,
+        role: role.value
+      })
+      user.populate('role')
       await user.save()
       return resp.json(user)
     } catch (e) {
@@ -50,7 +55,7 @@ class authController {
       if (!bcrypt.compareSync(password, user.password)) {
         return resp.status(400).json({ message: 'Wrong password' })
       }
-      return resp.json(user)
+      return resp.json({ user })
     } catch (e) {
       console.log(e)
       return resp.status(400).json({ message: 'Error during logining' })
