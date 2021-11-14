@@ -31,6 +31,12 @@
             @input="resetErrors('confirmPassword')"
           >
           </Input>
+
+          <ToggleSwitch
+            v-if="!loginMode"
+            v-model="seller"
+            label="I`m a seller"
+          />
         </form>
       </template>
 
@@ -77,6 +83,8 @@ export default {
       roleId: '619017b123d430f2b4f912a5'
     },
 
+    seller: false,
+
     confirmPassword: '',
 
     errors: {
@@ -97,6 +105,7 @@ export default {
     async onSubmit() {
       this.processing = true
       this.resetErrors()
+
       if (!this.loginMode && this.formdata.password !== this.confirmPassword) {
         this.setErrors({
           field: 'confirmPassword',
@@ -107,6 +116,12 @@ export default {
           if (this.loginMode) {
             await this.LOGIN(this.formdata)
           } else {
+            if (this.seller) {
+              this.formdata.roleId = '6190181ac34f6215fde4bff9'
+            } else {
+              this.formdata.roleId = '619017b123d430f2b4f912a5'
+            }
+
             await this.REGISTER(this.formdata)
           }
         } catch ({ response }) {
@@ -121,6 +136,7 @@ export default {
   watch: {
     value(value) {
       this.dialog = value
+
       if (value) {
         this.formdata = {
           username: '',
