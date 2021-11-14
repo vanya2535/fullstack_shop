@@ -126,7 +126,9 @@ export default {
           }
         } catch ({ response }) {
           console.log(response)
-          this.setErrors(response.data)
+          if (response) {
+            this.setErrors(response.data)
+          }
         }
       }
       this.processing = false
