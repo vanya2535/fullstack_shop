@@ -27,7 +27,9 @@
           Edit profile
         </Button>
 
-        <Button style="margin-top: 20px" @click="logout">Logout</Button>
+        <Button style="margin-top: 20px" type="text" @click="logout">
+          Logout
+        </Button>
       </div>
     </main>
   </div>
