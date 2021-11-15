@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 const { validationResult } = require('express-validator')
 const User = require('../models/User.js')
 const Role = require('../models/Role.js')
+const fileService = require('../service/fileService.js')
 
 function standartedErrors(errors) {
   return errors.errors.map((e) => ({
@@ -17,7 +18,8 @@ function standartedUser(user) {
     role: user.role,
     firstname: user.firstname,
     lastname: user.lastname,
-    links: user.links
+    links: user.links,
+    avatar: user.avatar
   }
 }
 
@@ -95,9 +97,13 @@ class authController {
       }
 
       const { _id, firstname, lastname, links } = req.body
+
+      const image = req.files.avatar
+      const avatar = fileService.saveFile(image)
+
       const user = await User.findByIdAndUpdate(
         _id,
-        { firstname, lastname, links },
+        { firstname, lastname, links, avatar },
         { new: true }
       )
 

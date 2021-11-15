@@ -6,7 +6,15 @@ const User = new mongoose.Schema({
   role: { type: String, required: true, ref: 'Role' },
   firstname: String,
   lastname: String,
-  links: Object
+  links: {
+    Object,
+    default: {
+      twitter: '',
+      facebook: '',
+      instagram: ''
+    }
+  },
+  avatar: String
 })
 
 module.exports = mongoose.model('User', User)
