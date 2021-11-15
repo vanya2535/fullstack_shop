@@ -10,7 +10,11 @@
       </div>
       <div
         class="navbar__section navbar__section_r"
-        :class="{ navbar__section_selected: $route.name === 'Profile' }"
+        :class="{
+          navbar__section_selected: ['Profile', 'ProfileEdit'].includes(
+            $route.name
+          )
+        }"
         @click="$router.push({ name: 'Profile' })"
       >
         <h6 class="navbar__value">profile</h6>
