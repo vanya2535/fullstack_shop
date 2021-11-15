@@ -10,13 +10,25 @@
         alt="profile picture"
         class="index__avatar"
       />
+
       <h5 class="index__username">
         {{ username }}
       </h5>
+
       <p class="index__role">
         {{ role }}
       </p>
-      <Button style="margin-top: 20px" @click="logout">Logout</Button>
+
+      <div class="index__buttons">
+        <Button
+          style="margin-top: 20px"
+          @click="$router.push({ name: 'ProfileEdit' })"
+        >
+          Edit profile
+        </Button>
+
+        <Button style="margin-top: 20px" @click="logout">Logout</Button>
+      </div>
     </main>
   </div>
 </template>
@@ -70,6 +82,10 @@ export default {
     text-align: center;
     text-transform: capitalize;
     color: $primary;
+  }
+
+  &__buttons {
+    display: inline-grid;
   }
 }
 </style>
