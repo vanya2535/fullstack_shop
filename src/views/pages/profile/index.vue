@@ -12,11 +12,11 @@
       />
 
       <h5 class="index__username">
-        {{ username }}
+        {{ firstname && lastname ? firstname + ' ' + lastname : username }}
       </h5>
 
       <p class="index__role">
-        {{ role }}
+        {{ role.toLowerCase() }}
       </p>
 
       <div class="index__buttons">
@@ -54,7 +54,7 @@ export default {
   },
 
   computed: {
-    ...mapState('user', ['username', 'role'])
+    ...mapState('user', ['username', 'role', 'firstname', 'lastname', 'links'])
   }
 }
 </script>
@@ -77,6 +77,10 @@ export default {
     margin: 21px auto;
     border-radius: 12px;
     width: 165px;
+  }
+
+  &__role {
+    text-transform: capitalize;
   }
 
   &__main {
