@@ -38,7 +38,7 @@ class authController {
           .json({ field: 'username', message: 'User already exists' })
       }
 
-      const role = await Role.findOne({ _id: roleId })
+      const role = await Role.findById(roleId)
       if (!role) {
         return resp
           .status(400)

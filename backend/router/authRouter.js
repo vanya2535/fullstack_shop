@@ -1,6 +1,7 @@
 const Router = require('express')
 const { check } = require('express-validator')
 const authController = require('../controller/authController.js')
+const authMiddlewaree = require('../middlewaree/authMiddleware.js')
 
 const router = new Router()
 
@@ -27,6 +28,7 @@ router.post(
 
 router.patch(
   '/update',
+  authMiddlewaree,
   check('firstname', 'Firstname cannot be empty').notEmpty(),
   check('lastname', 'Lastname cannot be empty').notEmpty(),
   authController.update
