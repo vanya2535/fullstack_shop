@@ -38,6 +38,10 @@
           :error="errors.lastname"
         />
 
+        <Button @click="isChangePasswordModalVisible = true">
+          Change password
+        </Button>
+
         <h6 class="edit-form__title">Social links</h6>
 
         <div class="edit-form__section">
@@ -106,6 +110,7 @@
         </Button>
       </div>
     </main>
+    <ChangePasswordModal v-model="isChangePasswordModalVisible" />
   </div>
 </template>
 
@@ -113,15 +118,17 @@
 import { mapGetters, mapActions } from 'vuex'
 import errors from '@/mixins/errors'
 import Logo from '@/assets/img/logo.svg'
+import ChangePasswordModal from '@/components/profile/ChangePasswordModal.vue'
 
 export default {
   name: 'Edit',
 
   mixins: [errors],
 
-  components: { Logo },
+  components: { Logo, ChangePasswordModal },
 
   data: () => ({
+    isChangePasswordModalVisible: false,
     processing: false,
 
     formdata: {

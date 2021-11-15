@@ -21,6 +21,7 @@ module.exports = {
           @import "~@/assets/scss/core/variables.scss";
           @import "~@/assets/scss/mixins/border.scss";
           @import "~@/assets/scss/mixins/page.scss";
+          @import "~@/assets/scss/mixins/modal.scss";
         `
       }
     }

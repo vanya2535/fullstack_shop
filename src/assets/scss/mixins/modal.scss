@@ -1,0 +1,10 @@
+@mixin modal-form {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 8px;
+}
+
+@mixin modal-footer {
+  display: flex;
+  justify-content: space-between;
+}

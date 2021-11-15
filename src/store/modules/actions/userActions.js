@@ -27,5 +27,17 @@ export default {
     } catch (e) {
       return Promise.reject(e)
     }
+  },
+
+  async CHANGE_PASSWORD({ commit }, payload) {
+    try {
+      const { data } = await this._vm.$api.patch(
+        '/user/change-password',
+        payload
+      )
+      return Promise.resolve(data)
+    } catch (e) {
+      return Promise.reject(e)
+    }
   }
 }
