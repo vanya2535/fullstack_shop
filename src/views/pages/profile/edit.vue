@@ -151,8 +151,7 @@ export default {
 
 <style lang="scss" scoped>
 .index {
-  padding-top: 64px;
-  height: 100%;
+  @include padding;
 
   &__header {
     display: flex;

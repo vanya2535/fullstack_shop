@@ -48,8 +48,8 @@ export default {
 
 <style lang="scss" scoped>
 .index {
-  padding-top: 64px;
-  height: 100%;
+  @include padding;
+
   background: url('../../../assets/img/index-background.jpg') no-repeat center
     fixed#e3dc86;
   background-size: cover;

@@ -20,6 +20,7 @@ module.exports = {
         additionalData: `
           @import "~@/assets/scss/core/variables.scss";
           @import "~@/assets/scss/mixins/border.scss";
+          @import "~@/assets/scss/mixins/page.scss";
         `
       }
     }
