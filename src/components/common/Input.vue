@@ -1,5 +1,8 @@
 <template>
-  <div :class="{ input__wrapper: !(error || content) }">
+  <div
+    class="input__wrapper"
+    :class="{ input__wrapper_mt: !(error || content) }"
+  >
     <label
       v-if="content || error"
       :class="`input__label` + ' ' + `${error ? 'input__label_error' : ''}`"
@@ -103,7 +106,11 @@ export default {
   }
 
   &__wrapper {
-    margin-top: 15.4px;
+    text-align: start;
+
+    &_mt {
+      margin-top: 15.4px;
+    }
   }
 
   &__label {

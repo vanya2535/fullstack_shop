@@ -1,5 +1,5 @@
 <template>
-  <button :class="`button_${type}`" v-on="$listeners">
+  <button :class="`button button_${type}`" v-on="$listeners">
     <slot />
   </button>
 </template>
