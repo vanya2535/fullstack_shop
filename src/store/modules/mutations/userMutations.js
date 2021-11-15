@@ -7,9 +7,14 @@ export default {
   },
 
   LOGOUT(state) {
-    for (let key of ['_id', 'username', 'role']) {
+    for (let key of ['_id', 'username', 'role', 'firstname', 'lastname']) {
       state[key] = null
     }
+
+    for (let key of Object.keys(state.links)) {
+      state.links[key] = ''
+    }
+
     localStorage.removeItem('user')
   }
 }

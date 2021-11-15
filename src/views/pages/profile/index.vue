@@ -12,12 +12,14 @@
       />
 
       <h5 class="index__username">
-        {{ firstname && lastname ? firstname + ' ' + lastname : username }}
+        {{ name }}
       </h5>
 
-      <p class="index__role">
-        {{ role.toLowerCase() }}
+      <p v-if="USER.role" class="index__role">
+        {{ USER.role }}
       </p>
+
+      <UserLinks v-if="USER.links" :links="USER.links" />
 
       <div class="index__buttons">
         <Button
@@ -36,13 +38,14 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 import Logo from '@/assets/img/logo.svg'
+import UserLinks from '@/components/profile/UserLinks.vue'
 
 export default {
   name: 'Index',
 
-  components: { Logo },
+  components: { Logo, UserLinks },
 
   methods: {
     ...mapMutations('user', ['LOGOUT']),
@@ -54,7 +57,13 @@ export default {
   },
 
   computed: {
-    ...mapState('user', ['username', 'role', 'firstname', 'lastname', 'links'])
+    ...mapGetters('user', ['USER']),
+
+    name() {
+      return this.USER.firstname && this.USER.lastname
+        ? this.USER.firstname + ' ' + this.USER.lastname
+        : this.USER.username
+    }
   }
 }
 </script>

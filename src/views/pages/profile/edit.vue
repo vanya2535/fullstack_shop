@@ -12,11 +12,15 @@
       />
 
       <h5 class="index__username">
-        {{ username }}
+        {{
+          USER.firstname && USER.lastname
+            ? USER.firstname + ' ' + USER.lastname
+            : USER.username
+        }}
       </h5>
 
-      <p class="index__role">
-        {{ role }}
+      <p v-if="USER.role" class="index__role">
+        {{ USER.role.toLowerCase() }}
       </p>
 
       <div class="edit-form">
@@ -106,7 +110,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import errors from '@/mixins/errors'
 import Logo from '@/assets/img/logo.svg'
 
@@ -142,7 +146,7 @@ export default {
   }),
 
   computed: {
-    ...mapState('user', ['username', 'role', '_id'])
+    ...mapGetters('user', ['USER'])
   },
 
   methods: {
@@ -161,6 +165,20 @@ export default {
       }
       this.processing = false
     }
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      for (let key of ['_id', 'firstname', 'lastname']) {
+        this.formdata[key] = this.USER[key] ? this.USER[key] : ''
+      }
+
+      if (this.USER.links) {
+        for (let key of Object.keys(this.USER.links)) {
+          this.formdata.links[key] = this.USER.links[key]
+        }
+      }
+    })
   }
 }
 </script>
