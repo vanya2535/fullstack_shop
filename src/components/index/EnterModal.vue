@@ -6,7 +6,7 @@
       </template>
 
       <template #main>
-        <form class="modal__form" @submit.prevent>
+        <form class="modal__form" @submit.prevent @keydown.enter="onSubmit">
           <Input
             v-model="formdata.username"
             label="Username"

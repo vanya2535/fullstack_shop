@@ -6,11 +6,19 @@
       </template>
 
       <template #main>
-        <form class="modal__form" @submit.prevent>
+        <form class="modal__form" @submit.prevent @keydown.enter="onSubmit">
+          <Input
+            v-model="oldPassword"
+            type="password"
+            label="Old password"
+            :error="errors.oldPassword"
+            @input="resetErrors('oldPassword')"
+          />
+
           <Input
             v-model="password"
             type="password"
-            label="Password"
+            label="New password"
             :error="errors.password"
             @input="resetErrors('password')"
           />
@@ -42,7 +50,7 @@
 
 <script>
 import errors from '@/mixins/errors.js'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'ChangePasswordModal',
@@ -62,12 +70,18 @@ export default {
 
     password: '',
     confirmPassword: '',
+    oldPassword: '',
 
     errors: {
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      oldPassword: ''
     }
   }),
+
+  computed: {
+    ...mapState('user', ['_id'])
+  },
 
   methods: {
     ...mapActions('user', ['CHANGE_PASSWORD']),
@@ -83,7 +97,12 @@ export default {
         })
       } else {
         try {
-          await this.CHANGE_PASSWORD(this.password)
+          await this.CHANGE_PASSWORD({
+            _id: this._id,
+            password: this.password,
+            oldPassword: this.oldPassword
+          })
+
           this.dialog = false
         } catch ({ response }) {
           console.log(response)

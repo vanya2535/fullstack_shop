@@ -20,6 +20,7 @@
 
       <button
         v-if="type === 'password'"
+        type="button"
         class="input__eye-button"
         @click="switchCurrentType"
       >

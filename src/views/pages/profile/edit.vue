@@ -38,7 +38,10 @@
           :error="errors.lastname"
         />
 
-        <Button @click="isChangePasswordModalVisible = true">
+        <Button
+          style="margin-top: 8px"
+          @click="isChangePasswordModalVisible = true"
+        >
           Change password
         </Button>
 
