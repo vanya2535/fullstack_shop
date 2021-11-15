@@ -25,4 +25,11 @@ router.post(
   authController.login
 )
 
+router.patch(
+  '/update',
+  check('firstname', 'Firstname cannot be empty').notEmpty(),
+  check('lastname', 'Lastname cannot be empty').notEmpty(),
+  authController.update
+)
+
 module.exports = router

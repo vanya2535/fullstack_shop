@@ -14,7 +14,10 @@ function standartedUser(user) {
   return {
     _id: user._id,
     username: user.username,
-    role: user.role
+    role: user.role,
+    firstname: user.firstname,
+    lastname: user.lastname,
+    links: user.links
   }
 }
 
@@ -81,6 +84,27 @@ class authController {
     } catch (e) {
       console.log(e)
       return resp.status(400).json({ message: 'Error during logining' })
+    }
+  }
+
+  async update(req, resp) {
+    try {
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        return resp.status(400).json(standartedErrors(errors))
+      }
+
+      const { _id, firstname, lastname, links } = req.body
+      const user = await User.findByIdAndUpdate(
+        _id,
+        { firstname, lastname, links },
+        { new: true }
+      )
+
+      return resp.json(standartedUser(user))
+    } catch (e) {
+      console.log(e)
+      return resp.status(400).json({ message: 'Error during updating user' })
     }
   }
 }
