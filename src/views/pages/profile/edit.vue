@@ -23,15 +23,15 @@
         <h6 class="edit-form__title">Personal data</h6>
 
         <Input
-          v-model="formdata.firstName"
+          v-model="formdata.firstname"
           label="Firstname"
-          :error="errors.firstName"
+          :error="errors.firstname"
         />
 
         <Input
-          v-model="formdata.lastName"
+          v-model="formdata.lastname"
           label="Lastname"
-          :error="errors.lastName"
+          :error="errors.lastname"
         />
 
         <h6 class="edit-form__title">Social links</h6>
@@ -47,7 +47,7 @@
           <Input
             v-model="formdata.links.facebook"
             label="Facebook"
-            :error="errors.lastName"
+            :error="errors.links.facebook"
           />
         </div>
 
@@ -62,7 +62,7 @@
           <Input
             v-model="formdata.links.instagram"
             label="Instagram"
-            :error="errors.lastName"
+            :error="errors.links.instagram"
           />
         </div>
 
@@ -77,7 +77,7 @@
           <Input
             v-model="formdata.links.twitter"
             label="Twitter"
-            :error="errors.lastName"
+            :error="errors.links.twitter"
           />
         </div>
       </div>
@@ -88,7 +88,8 @@
           style="margin-top: 20px"
           @click="onSubmit"
         >
-          Confirm
+          <template v-if="!processing">Confirm</template>
+          <SpinLoading v-else />
         </Button>
 
         <Button
@@ -105,20 +106,23 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import errors from '@/mixins/errors'
 import Logo from '@/assets/img/logo.svg'
 
 export default {
   name: 'Edit',
 
+  mixins: [errors],
+
   components: { Logo },
 
   data: () => ({
-    links: ['facebook', 'instagram', 'twitter'],
+    processing: false,
 
     formdata: {
-      firstName: '',
-      lastName: '',
+      firstname: '',
+      lastname: '',
       links: {
         facebook: '',
         instagram: '',
@@ -127,8 +131,8 @@ export default {
     },
 
     errors: {
-      firstName: '',
-      lastName: '',
+      firstname: '',
+      lastname: '',
       links: {
         facebook: '',
         instagram: '',
@@ -138,12 +142,24 @@ export default {
   }),
 
   computed: {
-    ...mapState('user', ['username', 'role'])
+    ...mapState('user', ['username', 'role', '_id'])
   },
 
   methods: {
-    onSubmit() {
-      console.log(this.formdata)
+    ...mapActions('user', ['UPDATE_USER']),
+
+    async onSubmit() {
+      this.processing = true
+      try {
+        await this.UPDATE_USER({ _id: this._id, ...this.formdata })
+        this.$router.push({ name: 'Profile' })
+      } catch ({ response }) {
+        console.log(response)
+        if (response) {
+          this.setErrors(response.data)
+        }
+      }
+      this.processing = false
     }
   }
 }

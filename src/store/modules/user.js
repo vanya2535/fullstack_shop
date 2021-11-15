@@ -6,7 +6,10 @@ export default {
   state: () => ({
     _id: null,
     username: null,
-    role: null
+    role: null,
+    firstname: null,
+    lastname: null,
+    links: null
   }),
   actions: userActions,
   mutations: userMutations,

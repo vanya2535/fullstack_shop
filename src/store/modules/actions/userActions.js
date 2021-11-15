@@ -17,5 +17,15 @@ export default {
     } catch (e) {
       return Promise.reject(e)
     }
+  },
+
+  async UPDATE_USER({ commit }, payload) {
+    try {
+      const { data } = await this._vm.$api.patch('/user/update', payload)
+      commit('SET_USER_DATA', data)
+      return Promise.resolve(data)
+    } catch (e) {
+      return Promise.reject(e)
+    }
   }
 }
