@@ -107,6 +107,37 @@ class authController {
       return resp.status(400).json({ message: 'Error during updating user' })
     }
   }
+
+  async changePassword(req, resp) {
+    try {
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        return resp.status(400).json(standartedErrors(errors))
+      }
+
+      const { _id, password, oldPassword } = req.body
+
+      const candidate = await User.findById(_id)
+      if (!bcrypt.compareSync(oldPassword, candidate.password)) {
+        resp
+          .status(400)
+          .json({ field: 'oldPassword', message: 'wrong password' })
+      }
+
+      const hashPassword = bcrypt.hashSync(password, 7)
+
+      const user = await User.findByIdAndUpdate(
+        _id,
+        { password: hashPassword },
+        { new: true }
+      )
+
+      return resp.json(standartedUser(user))
+    } catch (e) {
+      console.log(e)
+      return resp.status(400).json({ message: 'Error during updating user' })
+    }
+  }
 }
 
 module.exports = new authController()
