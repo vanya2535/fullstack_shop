@@ -13,7 +13,7 @@
       <ImageInput
         class="index__image-input"
         :preview="inputPreview"
-        @input="formdata.avatar = $event"
+        @input="avatar = $event"
       />
 
       <h5 class="index__username">
@@ -144,10 +144,11 @@ export default {
 
     dragover: false,
 
+    avatar: '',
+
     formdata: {
       firstname: '',
       lastname: '',
-      avatar: '',
       links: {
         facebook: '',
         instagram: '',
@@ -171,20 +172,23 @@ export default {
     ...mapGetters('user', ['USER', 'AVATAR']),
 
     inputPreview() {
-      if (typeof this.formdata.avatar === 'string') {
-        return this.formdata.avatar
+      if (typeof this.avatar === 'string') {
+        return this.avatar
       } else {
-        return URL.createObjectURL(this.formdata.avatar)
+        return URL.createObjectURL(this.avatar)
       }
     }
   },
 
   methods: {
-    ...mapActions('user', ['UPDATE_USER']),
+    ...mapActions('user', ['UPDATE_USER', 'UPDATE_AVATAR']),
 
     async onSubmit() {
       this.processing = true
       try {
+        if (this.avatar instanceof File) {
+          await this.UPDATE_AVATAR({ _id: this.USER._id, avatar: this.avatar })
+        }
         await this.UPDATE_USER({ _id: this.USER._id, ...this.formdata })
         this.$router.push({ name: 'Profile' })
       } catch ({ response }) {
@@ -202,7 +206,7 @@ export default {
 
       const file = dataTransfer.files[0]
       if (/\.(jpe?g|png)$/i.test(file.name)) {
-        this.formdata.avatar = file
+        this.avatar = file
       }
     }
   },
@@ -214,7 +218,7 @@ export default {
       }
 
       if (this.AVATAR) {
-        this.formdata.avatar = this.AVATAR
+        this.avatar = this.AVATAR
       }
 
       if (this.USER.links) {
@@ -244,7 +248,6 @@ export default {
 
   &__main {
     text-align: center;
-    text-transform: capitalize;
     color: $primary;
   }
 
@@ -252,10 +255,16 @@ export default {
     display: block;
     margin: 0 auto;
   }
+
+  &__username,
+  &__role {
+    text-transform: capitalize;
+  }
 }
 
 .edit-form {
   display: inline-grid;
+  grid-gap: 8px;
 
   &__title {
     margin: 20px auto 2px;
