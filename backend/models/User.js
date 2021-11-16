@@ -6,14 +6,7 @@ const User = new mongoose.Schema({
   role: { type: String, required: true, ref: 'Role' },
   firstname: String,
   lastname: String,
-  links: {
-    Object,
-    default: {
-      twitter: '',
-      facebook: '',
-      instagram: ''
-    }
-  },
+  links: Object,
   avatar: String
 })
 

@@ -98,8 +98,11 @@ class authController {
 
       const { _id, firstname, lastname, links } = req.body
 
-      const image = req.files.avatar
-      const avatar = fileService.saveFile(image)
+      const image = req.files?.avatar
+      let avatar = undefined
+      if (image) {
+        avatar = fileService.saveFile(image)
+      }
 
       const user = await User.findByIdAndUpdate(
         _id,
