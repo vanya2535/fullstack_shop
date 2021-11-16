@@ -50,22 +50,15 @@
 
 <script>
 import errors from '@/mixins/errors.js'
+import dialog from '@/mixins/dialog.js'
 import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'ChangePasswordModal',
 
-  mixins: [errors],
-
-  props: {
-    value: {
-      type: Boolean,
-      required: true
-    }
-  },
+  mixins: [errors, dialog],
 
   data: () => ({
-    dialog: false,
     processing: false,
 
     password: '',
@@ -112,16 +105,6 @@ export default {
         }
       }
       this.processing = false
-    }
-  },
-
-  watch: {
-    value(value) {
-      this.dialog = value
-    },
-
-    dialog(value) {
-      this.$emit('input', value)
     }
   }
 }

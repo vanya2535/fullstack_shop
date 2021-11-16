@@ -7,29 +7,12 @@
 </template>
 
 <script>
+import dialog from '@/mixins/dialog.js'
+
 export default {
   name: 'Dialog',
 
-  props: {
-    value: {
-      type: Boolean,
-      required: true
-    }
-  },
-
-  data: () => ({
-    dialog: false
-  }),
-
-  watch: {
-    value(value) {
-      this.dialog = value
-    },
-
-    dialog(value) {
-      this.$emit('input', value)
-    }
-  }
+  mixins: [dialog]
 }
 </script>
 

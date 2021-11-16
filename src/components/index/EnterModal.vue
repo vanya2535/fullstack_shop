@@ -59,21 +59,14 @@
 <script>
 import { mapActions } from 'vuex'
 import errors from '@/mixins/errors.js'
+import dialog from '@/mixins/dialog.js'
 
 export default {
   name: 'EnterModal',
 
-  mixins: [errors],
-
-  props: {
-    value: {
-      type: Boolean,
-      required: true
-    }
-  },
+  mixins: [errors, dialog],
 
   data: () => ({
-    dialog: false,
     loginMode: true,
     processing: false,
 
@@ -139,8 +132,6 @@ export default {
 
   watch: {
     value(value) {
-      this.dialog = value
-
       if (value) {
         this.formdata = {
           username: '',
@@ -149,10 +140,6 @@ export default {
         }
         this.confirmPassword = ''
       }
-    },
-
-    dialog(value) {
-      this.$emit('input', value)
     },
 
     loginMode(value) {
