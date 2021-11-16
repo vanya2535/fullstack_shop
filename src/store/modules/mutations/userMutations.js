@@ -11,8 +11,10 @@ export default {
       state[key] = null
     }
 
-    for (let key of Object.keys(state.links)) {
-      state.links[key] = ''
+    if (state.links) {
+      for (let key of Object.keys(state.links)) {
+        state.links[key] = ''
+      }
     }
 
     localStorage.removeItem('user')

@@ -8,6 +8,6 @@ export default {
   },
 
   AVATAR(state) {
-    return `http://localhost:3000/${state.avatar}`
+    return state.avatar ? `http://localhost:3000/${state.avatar}` : null
   }
 }
