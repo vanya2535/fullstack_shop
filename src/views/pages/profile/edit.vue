@@ -5,10 +5,10 @@
       <p>We always care customers</p>
     </header>
     <main class="index__main">
-      <img
-        src="https://secure.gravatar.com/avatar/50c30aae0f1878a17788458f7fefbcfe?s=252&d=mm&r=g"
-        alt="profile picture"
-        class="index__avatar"
+      <ImageInput
+        class="index__image-input"
+        :preview="inputPreview"
+        @input="formdata.avatar = $event"
       />
 
       <h5 class="index__username">
@@ -137,6 +137,7 @@ export default {
     formdata: {
       firstname: '',
       lastname: '',
+      avatar: '',
       links: {
         facebook: '',
         instagram: '',
@@ -147,6 +148,7 @@ export default {
     errors: {
       firstname: '',
       lastname: '',
+      avatar: '',
       links: {
         facebook: '',
         instagram: '',
@@ -156,7 +158,15 @@ export default {
   }),
 
   computed: {
-    ...mapGetters('user', ['USER'])
+    ...mapGetters('user', ['USER', 'AVATAR']),
+
+    inputPreview() {
+      if (typeof this.formdata.avatar === 'string') {
+        return this.formdata.avatar
+      } else {
+        return URL.createObjectURL(this.formdata.avatar)
+      }
+    }
   },
 
   methods: {
@@ -165,7 +175,7 @@ export default {
     async onSubmit() {
       this.processing = true
       try {
-        await this.UPDATE_USER({ _id: this._id, ...this.formdata })
+        await this.UPDATE_USER({ _id: this.USER._id, ...this.formdata })
         this.$router.push({ name: 'Profile' })
       } catch ({ response }) {
         console.log(response)
@@ -181,6 +191,10 @@ export default {
     this.$nextTick(() => {
       for (let key of ['_id', 'firstname', 'lastname']) {
         this.formdata[key] = this.USER[key] ? this.USER[key] : ''
+      }
+
+      if (this.AVATAR) {
+        this.formdata.avatar = this.AVATAR
       }
 
       if (this.USER.links) {
@@ -204,13 +218,8 @@ export default {
     color: $primary;
   }
 
-  &__avatar {
-    @include border;
-
-    display: block;
+  &__image-input {
     margin: 21px auto;
-    border-radius: 12px;
-    width: 165px;
   }
 
   &__main {
@@ -227,10 +236,9 @@ export default {
 
 .edit-form {
   display: inline-grid;
-  margin-top: 20px;
 
   &__title {
-    margin: 8px auto 2px;
+    margin: 20px auto 2px;
     color: $primary;
   }
 

@@ -5,5 +5,9 @@ export default {
 
   USER(state) {
     return state
+  },
+
+  AVATAR(state) {
+    return `http://localhost:3000/${state.avatar}`
   }
 }

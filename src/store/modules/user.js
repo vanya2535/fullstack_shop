@@ -7,6 +7,7 @@ export default {
     _id: null,
     username: null,
     role: null,
+    avatar: null,
     firstname: null,
     lastname: null,
     links: null

@@ -6,7 +6,10 @@
     </header>
     <main class="index__main">
       <img
-        src="https://secure.gravatar.com/avatar/50c30aae0f1878a17788458f7fefbcfe?s=252&d=mm&r=g"
+        :src="
+          AVATAR ||
+          'https://secure.gravatar.com/avatar/50c30aae0f1878a17788458f7fefbcfe?s=252&d=mm&r=g'
+        "
         alt="profile picture"
         class="index__avatar"
       />
@@ -57,7 +60,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('user', ['USER']),
+    ...mapGetters('user', ['USER', 'AVATAR']),
 
     name() {
       return this.USER.firstname && this.USER.lastname
@@ -86,6 +89,7 @@ export default {
     margin: 21px auto;
     border-radius: 12px;
     width: 165px;
+    height: 165px;
   }
 
   &__role {
