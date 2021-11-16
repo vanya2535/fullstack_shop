@@ -6,7 +6,13 @@ export default {
           this.errors[e.field] = e.message
         }
       } else {
-        this.errors[errors.field] = errors.message
+        if (errors.message) {
+          this.errors[errors.field] = errors.message
+        } else {
+          for (let error of errors.errors) {
+            this.errors[errors.field][error.field] = error.message
+          }
+        }
       }
     },
 
