@@ -30,6 +30,8 @@ router.post(
   authController.login
 )
 
+router.get('/:id', authController.getUserInfo)
+
 router.patch(
   '/update',
   authMiddlewaree,

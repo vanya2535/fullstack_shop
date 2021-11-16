@@ -89,6 +89,22 @@ class authController {
     }
   }
 
+  async getUserInfo(req, resp) {
+    try {
+      const user = await User.findById(req.params.id)
+      if (!user) {
+        return resp.status(404).json({ message: 'User is not found' })
+      }
+
+      return resp.json(standartedUser(user))
+    } catch (e) {
+      console.log(e)
+      return resp
+        .status(400)
+        .json({ message: 'Error during getting user info' })
+    }
+  }
+
   async update(req, resp) {
     try {
       const errors = validationResult(req)
