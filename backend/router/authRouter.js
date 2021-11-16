@@ -35,7 +35,7 @@ router.patch(
   authMiddlewaree,
   check('firstname', 'Firstname cannot be empty').notEmpty(),
   check('lastname', 'Lastname cannot be empty').notEmpty(),
-  bodyMiddlewaree(['_id', 'firstname', 'lastname']),
+  bodyMiddlewaree(['firstname', 'lastname']),
   linksMiddlewaree,
   authController.update
 )
@@ -47,8 +47,10 @@ router.patch(
     'password',
     'Password length must be more than 5 and less than 17'
   ).isLength({ min: 6, max: 16 }),
-  bodyMiddlewaree(['_id', 'password', 'oldPassword']),
+  bodyMiddlewaree(['password', 'oldPassword']),
   authController.changePassword
 )
+
+router.patch('/update-avatar', authMiddlewaree, authController.updateAvatar)
 
 module.exports = router

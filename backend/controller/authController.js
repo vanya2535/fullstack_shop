@@ -98,15 +98,32 @@ class authController {
 
       const { _id, firstname, lastname, links } = req.body
 
-      const image = req.files?.avatar
-      let avatar = undefined
-      if (image) {
-        avatar = fileService.saveFile(image)
-      }
-
       const user = await User.findByIdAndUpdate(
         _id,
-        { firstname, lastname, links, avatar },
+        { firstname, lastname, links },
+        { new: true }
+      )
+
+      return resp.json(standartedUser(user))
+    } catch (e) {
+      console.log(e)
+      return resp.status(400).json({ message: 'Error during updating user' })
+    }
+  }
+
+  async updateAvatar(req, resp) {
+    try {
+      const image = req.files?.avatar
+      if (!image) {
+        return resp
+          .status(400)
+          .json({ field: 'avatar', message: 'Avatar are not selected' })
+      }
+      let avatar = fileService.saveFile(image)
+
+      const user = await User.findByIdAndUpdate(
+        req.body._id,
+        { avatar },
         { new: true }
       )
 
