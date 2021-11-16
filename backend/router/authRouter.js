@@ -3,6 +3,7 @@ const { check } = require('express-validator')
 const authController = require('../controller/authController.js')
 const authMiddlewaree = require('../middlewaree/authMiddlewaree.js')
 const bodyMiddlewaree = require('../middlewaree/bodyMiddlewaree.js')
+const linksMiddlewaree = require('../middlewaree/linksMiddlewaree.js')
 
 const router = new Router()
 
@@ -35,6 +36,7 @@ router.patch(
   check('firstname', 'Firstname cannot be empty').notEmpty(),
   check('lastname', 'Lastname cannot be empty').notEmpty(),
   bodyMiddlewaree(['_id', 'firstname', 'lastname']),
+  linksMiddlewaree,
   authController.update
 )
 
