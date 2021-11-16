@@ -1,5 +1,10 @@
 <template>
-  <div class="index">
+  <div
+    class="index"
+    @dragover.prevent="dragover = true"
+    @dragleave="dragover = false"
+    @drop.prevent="onDrop"
+  >
     <header class="index__header">
       <Logo width="261" />
       <p>We always care customers</p>
@@ -113,6 +118,8 @@
         </Button>
       </div>
     </main>
+
+    <DragModal v-model="dragover" />
     <ChangePasswordModal v-model="isChangePasswordModalVisible" />
   </div>
 </template>
@@ -122,17 +129,20 @@ import { mapGetters, mapActions } from 'vuex'
 import errors from '@/mixins/errors'
 import Logo from '@/assets/img/logo.svg'
 import ChangePasswordModal from '@/components/profile/ChangePasswordModal.vue'
+import DragModal from '@/components/profile/DragModal.vue'
 
 export default {
   name: 'Edit',
 
   mixins: [errors],
 
-  components: { Logo, ChangePasswordModal },
+  components: { Logo, ChangePasswordModal, DragModal },
 
   data: () => ({
     isChangePasswordModalVisible: false,
     processing: false,
+
+    dragover: false,
 
     formdata: {
       firstname: '',
@@ -184,6 +194,16 @@ export default {
         }
       }
       this.processing = false
+    },
+
+    onDrop({ dataTransfer }) {
+      this.dragover = false
+      console.log(dataTransfer, dataTransfer.files[0])
+
+      const file = dataTransfer.files[0]
+      if (/\.(jpe?g|png)$/i.test(file.name)) {
+        this.formdata.avatar = file
+      }
     }
   },
 
