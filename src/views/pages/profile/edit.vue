@@ -13,6 +13,7 @@
       <ImageInput
         class="index__image-input"
         :preview="inputPreview"
+        :droppedImage="droppedImage"
         @input="avatar = $event"
       />
 
@@ -143,6 +144,7 @@ export default {
     processing: false,
 
     dragover: false,
+    droppedImage: null,
 
     avatar: '',
 
@@ -202,11 +204,10 @@ export default {
 
     onDrop({ dataTransfer }) {
       this.dragover = false
-      console.log(dataTransfer, dataTransfer.files[0])
 
       const file = dataTransfer.files[0]
       if (/\.(jpe?g|png)$/i.test(file.name)) {
-        this.avatar = file
+        this.droppedImage = file
       }
     }
   },

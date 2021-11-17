@@ -58,7 +58,8 @@ export default {
   components: { Cropper },
 
   props: {
-    preview: String
+    preview: String,
+    droppedImage: File
   },
 
   data: () => ({
@@ -103,6 +104,13 @@ export default {
   watch: {
     preview(value) {
       this.changeBackgroundImage(value)
+    },
+
+    droppedImage(value) {
+      if (value) {
+        this.image = URL.createObjectURL(value)
+        this.dialog = true
+      }
     }
   },
 
