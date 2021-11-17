@@ -9,23 +9,94 @@
       ref="input"
       type="file"
       accept="image/jpeg, image/jpg, image/png"
-      @input="$emit('input', $event.target.files[0])"
+      @input="onInput"
     />
+
+    <Dialog v-model="dialog">
+      <Card>
+        <template #header>
+          <h5 class="modal__title">Choose visible area of your avatar</h5>
+        </template>
+
+        <template #main>
+          <cropper
+            ref="cropper"
+            class="modal__cropper"
+            :src="image"
+            :stencil-props="{
+              handlers: {},
+              movable: false,
+              scalable: false,
+              aspectRatio: 1
+            }"
+            :resize-image="{
+              adjustStencil: false
+            }"
+            image-restriction="stencil"
+          />
+        </template>
+
+        <template #footer>
+          <div class="modal__buttons">
+            <Button @click="crop">Ok</Button>
+
+            <Button type="text" @click="dialog = false">Cancel</Button>
+          </div>
+        </template>
+      </Card>
+    </Dialog>
   </div>
 </template>
 
 <script>
+import { Cropper } from 'vue-advanced-cropper'
+import 'vue-advanced-cropper/dist/style.css'
+
 export default {
   name: 'ImageInput',
+
+  components: { Cropper },
 
   props: {
     preview: String
   },
 
+  data: () => ({
+    dialog: false,
+
+    image: null
+  }),
+
   methods: {
     changeBackgroundImage(image) {
       this.$refs.inputWrapper.style.background = `url(${image})`
       this.$refs.inputWrapper.style.backgroundSize = '165px'
+    },
+
+    onInput({ target }) {
+      this.image = URL.createObjectURL(target.files[0])
+      this.dialog = true
+    },
+
+    crop() {
+      const { canvas } = this.$refs.cropper.getResult()
+      const dataURL = canvas.toDataURL('image/jpg')
+
+      let arr = dataURL.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n)
+
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+
+      let extension = mime.split('/')
+      let avaFile = new File([u8arr], `avatar.${extension[1]}`, { type: mime })
+
+      this.$emit('input', avaFile)
+      this.dialog = false
     }
   },
 

@@ -227,6 +227,12 @@ export default {
         }
       }
     })
+  },
+
+  watch: {
+    avatar(value) {
+      console.log(value)
+    }
   }
 }
 </script>
