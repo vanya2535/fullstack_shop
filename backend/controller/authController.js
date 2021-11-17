@@ -135,13 +135,19 @@ class authController {
           .status(400)
           .json({ field: 'avatar', message: 'Avatar are not selected' })
       }
-      let avatar = fileService.saveFile(image)
+      const avatar = fileService.saveFile(image)
+
+      const oldUser = await User.findById(req.body._id)
 
       const user = await User.findByIdAndUpdate(
         req.body._id,
         { avatar },
         { new: true }
       )
+
+      if (oldUser.avatar) {
+        fileService.removeFile(oldUser.avatar)
+      }
 
       return resp.json(standartedUser(user))
     } catch (e) {
