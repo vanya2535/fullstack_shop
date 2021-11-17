@@ -47,7 +47,7 @@ export default {
 
   &__section {
     display: inline-block;
-    width: 100px;
+    width: 120px;
     text-align: center;
     color: $primary;
     background: $white-contrast;
