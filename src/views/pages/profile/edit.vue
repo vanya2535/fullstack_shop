@@ -2,7 +2,7 @@
   <div
     class="index"
     @dragover.prevent="dragover = true"
-    @dragleave="dragover = false"
+    @dragleave="onDragLeave"
     @drop.prevent="onDrop"
   >
     <header class="index__header">
@@ -200,6 +200,12 @@ export default {
         }
       }
       this.processing = false
+    },
+
+    onDragLeave({ fromElement, toElement }) {
+      if (!fromElement || !toElement) {
+        this.dragover = false
+      }
     },
 
     onDrop({ dataTransfer }) {

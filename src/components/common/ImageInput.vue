@@ -147,4 +147,15 @@ export default {
     }
   }
 }
+
+.modal {
+  &__title {
+    color: $primary;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+}
 </style>
