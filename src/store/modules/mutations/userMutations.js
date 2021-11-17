@@ -3,6 +3,14 @@ export default {
     for (let key of Object.keys(data)) {
       state[key] = data[key]
     }
+
+    const emptyFields = Object.keys(state).filter(
+      (field) => !Object.keys(data).includes(field)
+    )
+    for (let field of emptyFields) {
+      state[field] = null
+    }
+
     localStorage.setItem('user', JSON.stringify(state))
   },
 
