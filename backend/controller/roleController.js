@@ -29,7 +29,7 @@ class roleController {
       return resp.json(role)
     } catch (e) {
       console.log(e)
-      return resp.status(400).json({ message: 'Error during getting roles' })
+      return resp.status(400).json({ message: 'Error during creating role' })
     }
   }
 }
