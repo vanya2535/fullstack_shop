@@ -4,6 +4,7 @@ const fileUpload = require('express-fileupload')
 const mongoose = require('mongoose')
 const authRouter = require('./router/authRouter.js')
 const roleRouter = require('./router/roleRouter.js')
+const clothesFilterRouter = require('./router/clothesFilterRouter.js')
 
 const corsOptions = {
   origin: 'http://localhost:8080',
@@ -20,8 +21,10 @@ app.use(express.json())
 app.use(express.static('static'))
 app.use(fileUpload({}))
 app.use(cors(corsOptions))
+
 app.use('/user', authRouter)
 app.use('/role', roleRouter)
+app.use('/clothes-filter', clothesFilterRouter)
 
 async function start() {
   try {
