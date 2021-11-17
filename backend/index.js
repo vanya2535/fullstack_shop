@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const authRouter = require('./router/authRouter.js')
 const roleRouter = require('./router/roleRouter.js')
 const clothesFilterRouter = require('./router/clothesFilterRouter.js')
+const clothesItemRouter = require('./router/clothesItemRouter.js')
 
 const corsOptions = {
   origin: 'http://localhost:8080',
@@ -25,6 +26,7 @@ app.use(cors(corsOptions))
 app.use('/user', authRouter)
 app.use('/role', roleRouter)
 app.use('/clothes-filter', clothesFilterRouter)
+app.use('/clothes-item', clothesItemRouter)
 
 async function start() {
   try {
