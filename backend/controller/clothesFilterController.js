@@ -4,7 +4,13 @@ const ClothesFilter = require('../models/ClothesFilter.js')
 class clothesFilterContoller {
   async getClothesFilters(req, resp) {
     try {
-      const filters = await ClothesFilter.find()
+      const { type } = req.query
+      if (type) {
+        const filters = await ClothesFilter.find({ type })
+        return resp.json(filters)
+      }
+
+      const filters = await ClothesFilter.find({ type: ['sex', 'clothes'] })
       return resp.json(filters)
     } catch (e) {
       console.log(e)
@@ -21,7 +27,7 @@ class clothesFilterContoller {
         return resp.status(400).json(errors)
       }
 
-      const { value } = req.body
+      const { value, type } = req.body
 
       const candidate = await ClothesFilter.findOne({ value })
       if (candidate) {
@@ -30,8 +36,9 @@ class clothesFilterContoller {
           .json({ message: 'Clothes filter already exists' })
       }
 
-      const clothesFilter = await new ClothesFilter({ value })
-      clothesFilter.save()
+      const clothesFilter = await new ClothesFilter({ value, type })
+      await clothesFilter.save()
+
       return resp.json(clothesFilter)
     } catch (e) {
       console.log(e)
