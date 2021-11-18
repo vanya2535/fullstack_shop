@@ -18,7 +18,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import EnterButton from '@/components/index/UI/EnterButton.vue'
+import EnterButton from '@/components/index/EnterButton.vue'
 import EnterModal from '@/components/index/EnterModal.vue'
 import Logo from '@/assets/img/logo.svg'
 
