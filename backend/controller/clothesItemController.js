@@ -2,6 +2,7 @@ const fileService = require('../service/fileService.js')
 const User = require('../models/User.js')
 const ClothesItem = require('../models/ClothesItem.js')
 const ClothesFilter = require('../models/ClothesFilter.js')
+const ClothesItemService = require('../service/clothesItemService.js')
 
 class ClothesItemController {
   async createClothesItem(req, resp) {
@@ -9,8 +10,8 @@ class ClothesItemController {
       const { _id, name, brand, price, filters } = req.body
       const image = req.files.image
 
-      const candidate = await User.findById(_id)
-      if (!candidate) {
+      const seller = await ClothesItemService.getSellerData(_id)
+      if (!seller) {
         return resp
           .status(404)
           .json({ field: _id, message: 'User is not found' })
@@ -42,7 +43,7 @@ class ClothesItemController {
       }
 
       const clothesItem = await new ClothesItem({
-        seller: _id,
+        seller,
         image: imageName,
         name,
         brand,

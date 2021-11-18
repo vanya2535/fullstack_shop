@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 
 const ClothesItem = new Schema({
-  seller: { type: String, required: true, ref: 'User' },
+  seller: { type: Object, required: true, ref: 'User' },
   image: String,
   name: { type: String, required: true },
   brand: String,
