@@ -2,7 +2,23 @@
   <div class="footer">
     <nav class="navbar">
       <div
+        v-if="ROLE === 'SELLER'"
         class="navbar__section navbar__section_l"
+        :class="{ navbar__section_selected: $route.name === 'Lots' }"
+        @click="$router.push({ name: 'Lots' })"
+      >
+        <h6 class="navbar__value">Lots</h6>
+      </div>
+      <div
+        v-if="ROLE === 'USER'"
+        class="navbar__section navbar__section_l"
+        :class="{ navbar__section_selected: $route.name === 'Orders' }"
+        @click="$router.push({ name: 'Orders' })"
+      >
+        <h6 class="navbar__value">Add lot</h6>
+      </div>
+      <div
+        class="navbar__section navbar__section"
         :class="{ navbar__section_selected: $route.name === 'Main' }"
         @click="$router.push({ name: 'Main' })"
       >
@@ -24,8 +40,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'FooterNavbar'
+  name: 'FooterNavbar',
+
+  computed: {
+    ...mapGetters('user', ['ROLE'])
+  }
 }
 </script>
 
@@ -65,6 +87,14 @@ export default {
     &_selected {
       color: $white;
       background: $primary;
+
+      &:hover {
+        background: $primary !important;
+      }
+    }
+
+    &:hover {
+      background: $border;
     }
   }
 

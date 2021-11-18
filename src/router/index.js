@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '@/store'
 import Index from '@/views/pages/index/index'
 import Main from '@/views/pages/main/index'
 import Profile from '@/views/pages/profile/index'
 import ProfileEdit from '@/views/pages/profile/edit'
+import Lots from '@/views/pages/lots/index'
 
 Vue.use(VueRouter)
 
@@ -40,6 +40,15 @@ const routes = [
     meta: {
       auth: true
     }
+  },
+  {
+    path: '/lots',
+    name: 'Lots',
+    component: Lots,
+    meta: {
+      auth: true,
+      roles: ['SELLER']
+    }
   }
 ]
 
@@ -50,13 +59,21 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isLogged = JSON.parse(localStorage.getItem('user'))
+  const user = JSON.parse(localStorage.getItem('user'))
   const routeNames = routes.map((route) => route.name)
 
-  if (!isLogged && to.meta.auth) {
+  if (!user && to.meta.auth) {
     next({ name: 'Index' })
   } else if (routeNames.includes(to.name)) {
-    next()
+    if (to.meta.roles) {
+      if (to.meta.roles.includes(user.role)) {
+        next()
+      } else {
+        next({ name: 'Index' })
+      }
+    } else {
+      next()
+    }
   } else {
     next({ name: 'Index' })
   }

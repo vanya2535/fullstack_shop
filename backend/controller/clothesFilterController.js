@@ -1,6 +1,16 @@
 const { validationResult } = require('express-validator')
 const ClothesFilter = require('../models/ClothesFilter.js')
 
+const standartedClothesFilter = (clothesFilter) => ({
+  _id: clothesFilter._id,
+  value: clothesFilter.value,
+  type: clothesFilter.type
+})
+
+function standartedClothesFilters(clothesFilters) {
+  return clothesFilters.map(standartedClothesFilter)
+}
+
 class clothesFilterContoller {
   async getClothesFilters(req, resp) {
     try {
@@ -11,7 +21,7 @@ class clothesFilterContoller {
       }
 
       const filters = await ClothesFilter.find({ type: ['sex', 'clothes'] })
-      return resp.json(filters)
+      return resp.json(standartedClothesFilters(filters))
     } catch (e) {
       console.log(e)
       return resp
@@ -39,7 +49,7 @@ class clothesFilterContoller {
       const clothesFilter = await new ClothesFilter({ value, type })
       await clothesFilter.save()
 
-      return resp.json(clothesFilter)
+      return resp.json(standartedClothesFilter(clothesFilter))
     } catch (e) {
       console.log(e)
       return resp

@@ -9,5 +9,9 @@ export default {
 
   AVATAR(state) {
     return state.avatar ? `http://localhost:3000/${state.avatar}` : null
+  },
+
+  ROLE(state) {
+    return state.role
   }
 }
