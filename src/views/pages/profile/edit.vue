@@ -10,7 +10,7 @@
       <p>We always care customers</p>
     </header>
     <main class="index__main">
-      <ImageInput
+      <AvatarInput
         class="index__image-input"
         :preview="inputPreview"
         :droppedImage="droppedImage"
@@ -131,13 +131,14 @@ import errors from '@/mixins/errors'
 import Logo from '@/assets/img/logo.svg'
 import ChangePasswordModal from '@/components/profile/ChangePasswordModal.vue'
 import DragModal from '@/components/profile/DragModal.vue'
+import AvatarInput from '@/components/profile/AvatarInput.vue'
 
 export default {
   name: 'Edit',
 
   mixins: [errors],
 
-  components: { Logo, ChangePasswordModal, DragModal },
+  components: { Logo, ChangePasswordModal, DragModal, AvatarInput },
 
   data: () => ({
     isChangePasswordModalVisible: false,
@@ -234,12 +235,6 @@ export default {
         }
       }
     })
-  },
-
-  watch: {
-    avatar(value) {
-      console.log(value)
-    }
   }
 }
 </script>
