@@ -49,7 +49,7 @@ class ClothesItemController {
         price,
         filters: valuedFilters
       })
-      clothesItem.save()
+      await clothesItem.save()
       return resp.json(clothesItem)
     } catch (e) {
       console.log(e)
@@ -68,6 +68,44 @@ class ClothesItemController {
       return resp
         .status(400)
         .json({ message: 'Error during getting clothes items' })
+    }
+  }
+
+  async getClothesItemInfo(req, resp) {
+    try {
+      const clothesItem = await ClothesItem.findById(req.params.id)
+
+      if (!clothesItem) {
+        return resp
+          .status(404)
+          .json({ field: 'id', message: 'Clothes item is not found' })
+      }
+      return resp.json(clothesItem)
+    } catch (e) {
+      console.log(e)
+      return resp
+        .status(400)
+        .json({ message: 'Error during getting clothes item info' })
+    }
+  }
+
+  async deleteClothesItem(req, resp) {
+    try {
+      const { id } = req.params
+
+      const clothesItem = await ClothesItem.findById(id)
+      if (clothesItem.seller !== req.headers.authorization) {
+        return resp.status(403).json({ message: 'Not authorized' })
+      }
+
+      await clothesItem.remove()
+      fileService.removeFile(clothesItem.image)
+      return resp.json(id)
+    } catch (e) {
+      console.log(e)
+      return resp
+        .status(400)
+        .json({ message: 'Error during deleting clothes item' })
     }
   }
 }

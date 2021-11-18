@@ -6,6 +6,7 @@ const authMiddlewaree = require('../middlewaree/authMiddlewaree.js')
 const router = new Router()
 
 router.get('/', ClothesItemController.getClothesItems)
+router.get('/:id', ClothesItemController.getClothesItemInfo)
 
 router.post(
   '/create',
@@ -20,5 +21,7 @@ router.post(
   }),
   ClothesItemController.createClothesItem
 )
+
+router.delete('/delete/:id', ClothesItemController.deleteClothesItem)
 
 module.exports = router
