@@ -6,11 +6,11 @@
     </header>
     <main class="index__main">
       <ClothesFilterList class="index__filter-list" />
-      <div class="index__clothes-item-list">clothes items</div>
+      <ClothesItemList class="index__clothes-item-list" />
     </main>
-    <footer class="index__footer">
+    <!-- <footer class="index__footer">
       <div class="index__reviews-accordeon">reviews</div>
-    </footer>
+    </footer> -->
   </div>
 </template>
 
@@ -18,11 +18,12 @@
 import Logo from '@/assets/img/logo.svg'
 import { mapActions, mapGetters } from 'vuex'
 import ClothesFilterList from '@/components/lots/ClothesFilterList'
+import ClothesItemList from '@/components/lots/ClothesItemList'
 
 export default {
   name: 'Index',
 
-  components: { Logo, ClothesFilterList },
+  components: { Logo, ClothesFilterList, ClothesItemList },
 
   computed: {
     ...mapGetters('user', ['ID'])
@@ -43,6 +44,9 @@ export default {
 <style lang="scss" scoped>
 .index {
   @include padding;
+
+  padding-right: 3%;
+  padding-left: 3%;
 
   &__header {
     display: flex;
