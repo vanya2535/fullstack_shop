@@ -13,5 +13,9 @@ export default {
 
   ROLE(state) {
     return state.role
+  },
+
+  ID(state) {
+    return state._id
   }
 }

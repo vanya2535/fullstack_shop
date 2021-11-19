@@ -1,9 +1,9 @@
 export default {
   SEX_FILTERS(state) {
-    return state.sexFilters
+    return state.sexFilters ? state.sexFilters : []
   },
 
   CLOTHES_FILTERS(state) {
-    return state.clothesFilters
+    return state.clothesFilters ? state.clothesFilters : []
   }
 }

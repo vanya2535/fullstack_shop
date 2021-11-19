@@ -16,7 +16,7 @@
 
 <script>
 import Logo from '@/assets/img/logo.svg'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import ClothesFilterList from '@/components/lots/ClothesFilterList'
 
 export default {
@@ -24,12 +24,18 @@ export default {
 
   components: { Logo, ClothesFilterList },
 
+  computed: {
+    ...mapGetters('user', ['ID'])
+  },
+
   methods: {
-    ...mapActions('clothesFilter', ['GET_CLOTHES_FILTERS'])
+    ...mapActions('clothesFilter', ['GET_CLOTHES_FILTERS']),
+    ...mapActions('clothesItem', ['GET_CLOTHES_ITEMS'])
   },
 
   async mounted() {
     await this.GET_CLOTHES_FILTERS()
+    await this.GET_CLOTHES_ITEMS(this.ID)
   }
 }
 </script>
