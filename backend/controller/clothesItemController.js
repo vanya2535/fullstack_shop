@@ -25,13 +25,13 @@ class ClothesItemController {
           .status(400)
           .json({ field: 'price', message: 'Price cannot be less than 1$' })
       } else if (price < 100) {
-        parsedFilters.push('61956ff10cd91654fb97377a')
+        parsedFilters.push('61967e854e34210924fb1113')
       } else if (price < 200) {
-        parsedFilters.push('619562ab6e8301b966566d85')
+        parsedFilters.push('61967e854e34210924fb1115')
       } else if (price < 450) {
-        parsedFilters.push('619562b76e8301b966566d88')
+        parsedFilters.push('61967e854e34210924fb1117')
       } else if (price > 450) {
-        parsedFilters.push('619562bd6e8301b966566d8b')
+        parsedFilters.push('61967e854e34210924fb1119')
       }
 
       const valuedFilters = []
