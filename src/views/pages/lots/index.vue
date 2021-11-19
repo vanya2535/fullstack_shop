@@ -30,7 +30,7 @@ export default {
 
   methods: {
     ...mapActions('clothesFilter', ['GET_CLOTHES_FILTERS']),
-    ...mapActions('clothesItem', ['GET_CLOTHES_ITEMS'])
+    ...mapActions('clothesItems', ['GET_CLOTHES_ITEMS'])
   },
 
   async mounted() {
