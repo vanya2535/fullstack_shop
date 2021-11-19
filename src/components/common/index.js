@@ -6,6 +6,7 @@ import SvgIcon from './SvgIcon.vue'
 import SpinLoading from './SpinLoading.vue'
 import ToggleSwitch from './ToggleSwitch.vue'
 import FooterNavbar from './FooterNavbar.vue'
+import Header from './Header.vue'
 
 export default [
   Dialog,
@@ -15,5 +16,6 @@ export default [
   SvgIcon,
   SpinLoading,
   ToggleSwitch,
-  FooterNavbar
+  FooterNavbar,
+  Header
 ]

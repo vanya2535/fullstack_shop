@@ -1,9 +1,6 @@
 <template>
   <div class="index">
-    <header class="index__header">
-      <Logo width="261" />
-      <p>We always care customers</p>
-    </header>
+    <Header />
     <main class="index__main">
       <h6 class="index__description">
         Wherever you’re going, it is important that you get there in style!
@@ -20,11 +17,10 @@
 import { mapGetters } from 'vuex'
 import EnterButton from '@/components/index/EnterButton.vue'
 import EnterModal from '@/components/index/EnterModal.vue'
-import Logo from '@/assets/img/logo.svg'
 
 export default {
   name: 'Index',
-  components: { EnterButton, EnterModal, Logo },
+  components: { EnterButton, EnterModal },
 
   data: () => ({
     isEnterModalVisible: false

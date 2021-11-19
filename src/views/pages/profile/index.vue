@@ -1,9 +1,6 @@
 <template>
   <div class="index">
-    <header class="index__header">
-      <Logo width="261" />
-      <p>We always care customers</p>
-    </header>
+    <Header />
     <main class="index__main">
       <img
         :src="
@@ -42,13 +39,12 @@
 
 <script>
 import { mapMutations, mapGetters } from 'vuex'
-import Logo from '@/assets/img/logo.svg'
 import UserLinks from '@/components/profile/UserLinks.vue'
 
 export default {
   name: 'Index',
 
-  components: { Logo, UserLinks },
+  components: { UserLinks },
 
   methods: {
     ...mapMutations('user', ['LOGOUT']),

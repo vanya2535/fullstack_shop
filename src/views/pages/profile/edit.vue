@@ -5,10 +5,7 @@
     @dragleave="onDragLeave"
     @drop.prevent="onDrop"
   >
-    <header class="index__header">
-      <Logo width="261" />
-      <p>We always care customers</p>
-    </header>
+    <Header />
     <main class="index__main">
       <AvatarInput
         class="index__image-input"
@@ -128,7 +125,6 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import errors from '@/mixins/errors'
-import Logo from '@/assets/img/logo.svg'
 import ChangePasswordModal from '@/components/profile/ChangePasswordModal.vue'
 import DragModal from '@/components/profile/DragModal.vue'
 import AvatarInput from '@/components/profile/AvatarInput.vue'
@@ -138,7 +134,7 @@ export default {
 
   mixins: [errors],
 
-  components: { Logo, ChangePasswordModal, DragModal, AvatarInput },
+  components: { ChangePasswordModal, DragModal, AvatarInput },
 
   data: () => ({
     isChangePasswordModalVisible: false,
