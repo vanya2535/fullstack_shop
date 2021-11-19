@@ -1,5 +1,5 @@
 <template>
-  <button :class="`button button_${type}`" v-on="$listeners">
+  <button :class="`button button_${type}`" @click="onClick">
     <slot />
   </button>
 </template>
@@ -14,6 +14,19 @@ export default {
       default: 'primary',
       validator: (value) => {
         return ['primary', 'text'].includes(value)
+      }
+    },
+
+    disabled: {
+      Boolean,
+      default: false
+    }
+  },
+
+  methods: {
+    onClick() {
+      if (!this.disabled) {
+        this.$emit('click')
       }
     }
   }

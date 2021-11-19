@@ -36,7 +36,7 @@
 
       <template #footer>
         <div class="modal__footer">
-          <Button style="width: 59px" @click="onSubmit">
+          <Button style="width: 59px" :disabled="processing" @click="onSubmit">
             <template v-if="!processing">Enter</template>
             <SpinLoading v-else />
           </Button>
