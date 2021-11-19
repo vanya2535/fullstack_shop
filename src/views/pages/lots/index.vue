@@ -29,7 +29,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('clothesFilter', ['GET_CLOTHES_FILTERS']),
+    ...mapActions('clothesFilters', ['GET_CLOTHES_FILTERS']),
     ...mapActions('clothesItems', ['GET_CLOTHES_ITEMS'])
   },
 

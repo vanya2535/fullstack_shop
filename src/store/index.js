@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import clothesFilter from './modules/clothesFilter.js'
+import clothesFilters from './modules/clothesFilters.js'
 import clothesItems from './modules/clothesItems.js'
 import user from './modules/user.js'
 
@@ -13,9 +13,9 @@ export default new Vuex.Store({
       ...user
     },
 
-    clothesFilter: {
+    clothesFilters: {
       namespaced: true,
-      ...clothesFilter
+      ...clothesFilters
     },
 
     clothesItems: {

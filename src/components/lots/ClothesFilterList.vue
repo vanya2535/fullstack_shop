@@ -34,7 +34,7 @@ export default {
   }),
 
   computed: {
-    ...mapGetters('clothesFilter', ['SEX_FILTERS', 'CLOTHES_FILTERS'])
+    ...mapGetters('clothesFilters', ['SEX_FILTERS', 'CLOTHES_FILTERS'])
   }
 }
 </script>
