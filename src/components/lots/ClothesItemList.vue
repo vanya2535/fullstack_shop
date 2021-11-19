@@ -5,6 +5,7 @@
       :key="item._id"
       class="list__item"
       :class="{ list__item_selected: item._id === selectedItem }"
+      @click="selectedItem = item._id"
     >
       <img
         :src="`http://localhost:3000/${item.image}`"
@@ -53,7 +54,15 @@ export default {
     background: $white-contrast;
 
     &_selected {
-      background: $status;
+      background: $background-selected;
+
+      &:hover {
+        background: $background-selected !important;
+      }
+    }
+
+    &:hover {
+      background: $background-hover;
     }
   }
 }
