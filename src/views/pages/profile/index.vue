@@ -71,13 +71,6 @@ export default {
 .index {
   @include padding;
 
-  &__header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: $primary;
-  }
-
   &__avatar {
     @include border;
 

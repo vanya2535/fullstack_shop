@@ -50,13 +50,6 @@ export default {
     fixed#e3dc86;
   background-size: cover;
 
-  &__header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: $primary;
-  }
-
   &__main {
     margin-top: calc(100vh - 284px - 78px - 64px - 86px);
     padding: 20px;
