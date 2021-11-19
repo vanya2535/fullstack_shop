@@ -59,6 +59,9 @@ export default {
   }
 
   &__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 27px;
   }
 
