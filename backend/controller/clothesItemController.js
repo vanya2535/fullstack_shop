@@ -1,5 +1,5 @@
+const { Types } = require('mongoose')
 const fileService = require('../service/fileService.js')
-const User = require('../models/User.js')
 const ClothesItem = require('../models/ClothesItem.js')
 const ClothesFilter = require('../models/ClothesFilter.js')
 const ClothesItemService = require('../service/clothesItemService.js')
@@ -62,6 +62,14 @@ class ClothesItemController {
 
   async getClothesItems(req, resp) {
     try {
+      const sellerId = req.query.sellerId
+      if (sellerId) {
+        const clothesItems = await ClothesItem.find({
+          'seller._id': Types.ObjectId(sellerId)
+        })
+        return resp.json(clothesItems)
+      }
+
       const clothesItems = await ClothesItem.find()
       return resp.json(clothesItems)
     } catch (e) {
