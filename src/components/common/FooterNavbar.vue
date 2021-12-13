@@ -4,7 +4,9 @@
       <div
         v-if="ROLE === 'SELLER'"
         class="navbar__section navbar__section_l"
-        :class="{ navbar__section_selected: $route.name === 'Lots' }"
+        :class="{
+          navbar__section_selected: ['Lots', 'LotsCreate'].includes($route.name)
+        }"
         @click="$router.push({ name: 'Lots' })"
       >
         <h6 class="navbar__value">Lots</h6>

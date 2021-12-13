@@ -53,7 +53,7 @@ import { Cropper } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
 
 export default {
-  name: 'AvatarInput',
+  name: 'ImageInput',
 
   components: { Cropper },
 
@@ -115,13 +115,7 @@ export default {
   },
 
   mounted() {
-    if (this.preview) {
-      this.changeBackgroundImage(this.preview)
-    } else {
-      this.changeBackgroundImage(
-        'https://secure.gravatar.com/avatar/50c30aae0f1878a17788458f7fefbcfe?s=252&d=mm&r=g'
-      )
-    }
+    this.changeBackgroundImage(this.preview)
   }
 }
 </script>
@@ -139,6 +133,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 12px;
     height: 100%;
     background: $shadow;
 

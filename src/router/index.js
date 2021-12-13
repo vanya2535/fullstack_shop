@@ -5,6 +5,7 @@ import Main from '@/views/pages/main/index'
 import Profile from '@/views/pages/profile/index'
 import ProfileEdit from '@/views/pages/profile/edit'
 import Lots from '@/views/pages/lots/index'
+import LotsCreate from '@/views/pages/lots/create'
 
 Vue.use(VueRouter)
 
@@ -34,7 +35,7 @@ const routes = [
     }
   },
   {
-    path: '/profile-edit',
+    path: '/profile/edit',
     name: 'ProfileEdit',
     component: ProfileEdit,
     meta: {
@@ -45,6 +46,15 @@ const routes = [
     path: '/lots',
     name: 'Lots',
     component: Lots,
+    meta: {
+      auth: true,
+      roles: ['SELLER']
+    }
+  },
+  {
+    path: '/lots/create',
+    name: 'LotsCreate',
+    component: LotsCreate,
     meta: {
       auth: true,
       roles: ['SELLER']

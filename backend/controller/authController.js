@@ -3,13 +3,7 @@ const { validationResult } = require('express-validator')
 const User = require('../models/User.js')
 const Role = require('../models/Role.js')
 const fileService = require('../service/fileService.js')
-
-function standartedErrors(errors) {
-  return errors.errors.map((e) => ({
-    field: e.param,
-    message: e.msg
-  }))
-}
+const { standartedErrors } = require('../service/errrorService.js')
 
 function standartedUser(user) {
   return {

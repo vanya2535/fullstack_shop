@@ -7,7 +7,7 @@
   >
     <Header />
     <main class="index__main">
-      <AvatarInput
+      <ImageInput
         class="index__image-input"
         :preview="inputPreview"
         :droppedImage="droppedImage"
@@ -33,12 +33,14 @@
           v-model="formdata.firstname"
           label="Firstname"
           :error="errors.firstname"
+          @input="resetErrors('firstname')"
         />
 
         <Input
           v-model="formdata.lastname"
           label="Lastname"
           :error="errors.lastname"
+          @input="resetErrors('lastname')"
         />
 
         <Button
@@ -50,48 +52,18 @@
 
         <h6 class="edit-form__title">Social links</h6>
 
-        <div class="edit-form__section">
-          <SvgIcon
-            class="edit-form__icon"
-            name="facebook"
-            width="24"
-            height="24"
-          />
+        <div
+          v-for="key of Object.keys(formdata.links)"
+          :key="key"
+          class="edit-form__section"
+        >
+          <SvgIcon class="edit-form__icon" :name="key" width="24" height="24" />
 
           <Input
-            v-model="formdata.links.facebook"
-            label="Facebook"
-            :error="errors.links.facebook"
-          />
-        </div>
-
-        <div class="edit-form__section">
-          <SvgIcon
-            class="edit-form__icon"
-            name="instagram"
-            width="24"
-            height="24"
-          />
-
-          <Input
-            v-model="formdata.links.instagram"
-            label="Instagram"
-            :error="errors.links.instagram"
-          />
-        </div>
-
-        <div class="edit-form__section">
-          <SvgIcon
-            class="edit-form__icon"
-            name="twitter"
-            width="24"
-            height="24"
-          />
-
-          <Input
-            v-model="formdata.links.twitter"
-            label="Twitter"
-            :error="errors.links.twitter"
+            v-model="formdata.links[key]"
+            :label="capitalize(key)"
+            :error="errors.links[key]"
+            @input="errors.links[key] = null"
           />
         </div>
       </div>
@@ -100,6 +72,7 @@
         <Button
           class="index__button"
           style="margin-top: 20px"
+          :disabled="processing"
           @click="onSubmit"
         >
           <template v-if="!processing">Confirm</template>
@@ -127,14 +100,13 @@ import { mapGetters, mapActions } from 'vuex'
 import errors from '@/mixins/errors'
 import ChangePasswordModal from '@/components/profile/ChangePasswordModal.vue'
 import DragModal from '@/components/profile/DragModal.vue'
-import AvatarInput from '@/components/profile/AvatarInput.vue'
 
 export default {
   name: 'Edit',
 
   mixins: [errors],
 
-  components: { ChangePasswordModal, DragModal, AvatarInput },
+  components: { ChangePasswordModal, DragModal },
 
   data: () => ({
     isChangePasswordModalVisible: false,
@@ -143,7 +115,8 @@ export default {
     dragover: false,
     droppedImage: null,
 
-    avatar: '',
+    avatar:
+      'https://secure.gravatar.com/avatar/50c30aae0f1878a17788458f7fefbcfe?s=252&d=mm&r=g',
 
     formdata: {
       firstname: '',
@@ -182,6 +155,10 @@ export default {
   methods: {
     ...mapActions('user', ['UPDATE_USER', 'UPDATE_AVATAR']),
 
+    capitalize(word) {
+      return word.slice(0, 1).toUpperCase() + word.slice(1)
+    },
+
     async onSubmit() {
       this.processing = true
       try {
@@ -191,6 +168,7 @@ export default {
         await this.UPDATE_USER({ _id: this.USER._id, ...this.formdata })
         this.$router.push({ name: 'Profile' })
       } catch ({ response }) {
+        this.processing = false
         console.log(response)
         if (response) {
           this.setErrors(response.data)

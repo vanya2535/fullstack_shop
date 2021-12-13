@@ -7,6 +7,8 @@ import SpinLoading from './SpinLoading.vue'
 import ToggleSwitch from './ToggleSwitch.vue'
 import FooterNavbar from './FooterNavbar.vue'
 import Header from './Header.vue'
+import ImageInput from './ImageInput.vue'
+import ErrorBlock from './ErrorBlock.vue'
 
 export default [
   Dialog,
@@ -17,5 +19,7 @@ export default [
   SpinLoading,
   ToggleSwitch,
   FooterNavbar,
-  Header
+  Header,
+  ImageInput,
+  ErrorBlock
 ]

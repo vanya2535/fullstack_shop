@@ -2,7 +2,7 @@
   <div class="index">
     <header class="index__header">
       <Logo class="index__logo" width="137" />
-      <Button>Add lot</Button>
+      <Button @click="$router.push({ name: 'LotsCreate' })">Add lot</Button>
     </header>
     <main class="index__main">
       <ClothesFilterList class="index__filter-list" />
@@ -71,6 +71,11 @@ export default {
 
   &__reviews-accordeon {
     margin-top: 14px;
+  }
+
+  &__filter-list,
+  &__clothes-item-list {
+    justify-content: center;
   }
 }
 </style>

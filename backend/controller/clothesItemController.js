@@ -3,23 +3,31 @@ const fileService = require('../service/fileService.js')
 const ClothesItem = require('../models/ClothesItem.js')
 const ClothesFilter = require('../models/ClothesFilter.js')
 const ClothesItemService = require('../service/clothesItemService.js')
+const { standartedErrors } = require('../service/errrorService.js')
 
 class ClothesItemController {
   async createClothesItem(req, resp) {
     try {
+      const { validationResult } = require('express-validator')
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        return resp.status(400).json(standartedErrors(errors))
+      }
+
       const { _id, name, brand, price, filters } = req.body
-      const image = req.files.image
+      const image = req.files?.image
 
       const seller = await ClothesItemService.getSellerData(_id)
       if (!seller) {
         return resp
-          .status(404)
+          .status(400)
           .json({ field: _id, message: 'User is not found' })
       }
 
       const imageName = fileService.saveFile(image)
 
-      const parsedFilters = JSON.parse(filters)
+      const parsedFilters = JSON.parse(filters).filter((filter) => filter)
+
       if (price < 1) {
         return resp
           .status(400)

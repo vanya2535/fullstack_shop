@@ -23,6 +23,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'ClothesFilterList',
 
@@ -35,6 +36,15 @@ export default {
 
   computed: {
     ...mapGetters('clothesFilters', ['SEX_FILTERS', 'CLOTHES_FILTERS'])
+  },
+
+  watch: {
+    selectedFilters: {
+      handler(value) {
+        this.$emit('select', value)
+      },
+      deep: true
+    }
   }
 }
 </script>

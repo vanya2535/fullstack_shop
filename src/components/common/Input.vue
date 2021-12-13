@@ -4,7 +4,7 @@
     :class="{ input__wrapper_mt: !(error || content) }"
   >
     <label
-      v-if="content || error"
+      v-if="`${content}` || error"
       :class="`input__label` + ' ' + `${error ? 'input__label_error' : ''}`"
     >
       {{ error ? error : label }}
@@ -13,7 +13,7 @@
     <div class="input__body">
       <input
         v-model="content"
-        :class="`input${error ? '_error' : ''}`"
+        :class="`input__field input${error ? '_error' : ''}`"
         :type="type === 'password' ? currentType : type"
         :placeholder="label"
       />
@@ -37,17 +37,17 @@ export default {
 
   props: {
     type: {
-      type: String,
+      type: [String, Number],
       default: 'text',
       validator: (value) => {
-        return ['text', 'password'].includes(value)
+        return ['text', 'password', 'number'].includes(value)
       }
     },
 
     label: String,
 
     value: {
-      type: String,
+      type: [String, Number],
       required: true
     },
 
@@ -67,7 +67,7 @@ export default {
       this.content = value
     },
 
-    content(value) {
+    content(value, oldValue) {
       this.$emit('input', value)
     }
   },
@@ -137,6 +137,11 @@ export default {
     height: 36px;
     min-width: 36px;
     background: $primary;
+  }
+
+  &__field[type='number']::-webkit-outer-spin-button,
+  &__field[type='number']::-webkit-inner-spin-button {
+    display: none;
   }
 }
 </style>
