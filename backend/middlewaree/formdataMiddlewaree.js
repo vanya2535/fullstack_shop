@@ -14,7 +14,6 @@ module.exports = function (fields) {
     try {
       const errors = []
       for (let field of fields) {
-        console.log(field)
         switch (field.type) {
           case 'file':
             if (!req.files?.[field.value]) {
@@ -36,7 +35,7 @@ module.exports = function (fields) {
       }
 
       if (errors.length) {
-        resp.status(400).json(errors)
+        return resp.status(400).json(errors)
       }
 
       next()
