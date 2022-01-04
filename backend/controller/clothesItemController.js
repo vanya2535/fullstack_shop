@@ -70,16 +70,26 @@ class ClothesItemController {
 
   async getClothesItems(req, resp) {
     try {
-      const sellerId = req.query.sellerId
-      if (sellerId) {
-        const clothesItems = await ClothesItem.find({
-          'seller._id': Types.ObjectId(sellerId)
-        })
-        return resp.json(clothesItems)
-      }
+      const { sellerId, page } = req.query
+      const query = sellerId
+        ? {
+            'seller._id': Types.ObjectId(sellerId)
+          }
+        : null
 
-      const clothesItems = await ClothesItem.find()
-      return resp.json(clothesItems)
+      const clothesItems = await ClothesItem.find(query)
+        .skip(20 * (page - 1 || 0))
+        .limit(20)
+
+      const count = await ClothesItem.count(query)
+      return resp
+        .set({
+          'X-Pagination-Total-Count': count,
+          'X-Pagination-Page-Count': Math.ceil(count / 20),
+          'X-Pagination-Current-Page': page || 1,
+          'X-Pagination-Per-Page': 20
+        })
+        .json(clothesItems)
     } catch (e) {
       console.log(e)
       return resp
