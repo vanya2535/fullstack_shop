@@ -1,10 +1,16 @@
 <template>
-  <div class="index">
+  <div
+    class="index"
+    @dragover.prevent="dragover = true"
+    @dragleave="onDragLeave"
+    @drop.prevent="onDrop"
+  >
     <Header />
     <main class="index__main">
       <ImageInput
         class="index__image-input"
         :preview="inputPreview"
+        :droppedImage="droppedImage"
         @input="onImageInput"
       />
 
@@ -61,6 +67,8 @@
         </Button>
       </div>
     </main>
+
+    <DragModal v-model="dragover" />
   </div>
 </template>
 
@@ -74,12 +82,13 @@ export default {
 
   mixins: [errors],
 
-  components: {
-    ClothesFilterList
-  },
+  components: { ClothesFilterList },
 
   data: () => ({
     processing: false,
+
+    dragover: false,
+    droppedImage: null,
 
     formdata: {
       image:
@@ -145,6 +154,21 @@ export default {
         }
       }
       this.processing = false
+    },
+
+    onDragLeave({ fromElement, toElement }) {
+      if (!fromElement || !toElement) {
+        this.dragover = false
+      }
+    },
+
+    onDrop({ dataTransfer }) {
+      this.dragover = false
+
+      const file = dataTransfer.files[0]
+      if (/\.(jpe?g|png)$/i.test(file.name)) {
+        this.droppedImage = file
+      }
     }
   },
 

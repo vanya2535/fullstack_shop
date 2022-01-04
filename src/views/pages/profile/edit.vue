@@ -99,14 +99,13 @@
 import { mapGetters, mapActions } from 'vuex'
 import errors from '@/mixins/errors'
 import ChangePasswordModal from '@/components/profile/ChangePasswordModal.vue'
-import DragModal from '@/components/profile/DragModal.vue'
 
 export default {
   name: 'Edit',
 
   mixins: [errors],
 
-  components: { ChangePasswordModal, DragModal },
+  components: { ChangePasswordModal },
 
   data: () => ({
     isChangePasswordModalVisible: false,

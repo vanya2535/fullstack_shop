@@ -9,6 +9,7 @@ import FooterNavbar from './FooterNavbar.vue'
 import Header from './Header.vue'
 import ImageInput from './ImageInput.vue'
 import ErrorBlock from './ErrorBlock.vue'
+import DragModal from './DragModal.vue'
 
 export default [
   Dialog,
@@ -21,5 +22,6 @@ export default [
   FooterNavbar,
   Header,
   ImageInput,
-  ErrorBlock
+  ErrorBlock,
+  DragModal
 ]
