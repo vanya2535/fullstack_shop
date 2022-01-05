@@ -67,7 +67,7 @@ export default {
   methods: {
     input(number) {
       if (number !== '...') {
-        this.$emit('change', number)
+        this.$emit('change', Number(number))
       }
     }
   }

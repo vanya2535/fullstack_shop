@@ -106,7 +106,7 @@ export default {
 
     const page = this.$route.query.page
     if (page) {
-      this.currentPage = page
+      this.currentPage = Number(page)
     }
 
     const { headers } = await this.GET_CLOTHES_ITEMS(this.query)
