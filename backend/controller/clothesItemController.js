@@ -42,21 +42,13 @@ class ClothesItemController {
         parsedFilters.push('61967e854e34210924fb1119')
       }
 
-      const valuedFilters = []
-      for (let id of parsedFilters) {
-        const filter = await ClothesFilter.findById(id)
-        if (filter) {
-          valuedFilters.push(filter.value)
-        }
-      }
-
       const clothesItem = await new ClothesItem({
         seller,
         image: imageName,
         name,
         brand,
         price,
-        filters: valuedFilters
+        filters: parsedFilters
       })
       await clothesItem.save()
       return resp.json(clothesItem)
@@ -70,12 +62,18 @@ class ClothesItemController {
 
   async getClothesItems(req, resp) {
     try {
-      const { sellerId, page } = req.query
-      const query = sellerId
-        ? {
-            'seller._id': Types.ObjectId(sellerId)
-          }
-        : null
+      const { sellerId, filters, page } = req.query
+      const query = {}
+
+      if (sellerId) {
+        query['seller._id'] = Types.ObjectId(sellerId)
+      }
+
+      if (filters) {
+        query.filters = {
+          $all: filters.map((filter) => Types.ObjectId(filter))
+        }
+      }
 
       const clothesItems = await ClothesItem.find(query)
         .skip(20 * (page - 1 || 0))
