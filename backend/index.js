@@ -10,7 +10,8 @@ const clothesItemRouter = require('./router/clothesItemRouter.js')
 const corsOptions = {
   origin: 'http://localhost:8080',
   credentials: true,
-  optionSuccessStatus: 200
+  optionSuccessStatus: 200,
+  exposedHeaders: '*'
 }
 const app = express()
 
@@ -27,6 +28,17 @@ app.use('/user', authRouter)
 app.use('/role', roleRouter)
 app.use('/clothes-filter', clothesFilterRouter)
 app.use('/clothes-item', clothesItemRouter)
+
+// const { createServer } = require('http')
+// const { Server } = require('socket.io')
+// const httpServer = createServer(app)
+// const io = new Server(httpServer, {
+//   /* options */
+// })
+
+// io.on('connection', (socket) => {
+//   console.log('socket connected')
+// })
 
 async function start() {
   try {
