@@ -20,7 +20,7 @@ class clothesFilterContoller {
         return resp.json(filters)
       }
 
-      const filters = await ClothesFilter.find({ type: ['sex', 'clothes'] })
+      const filters = await ClothesFilter.find()
       return resp.json(standartedClothesFilters(filters))
     } catch (e) {
       console.log(e)
