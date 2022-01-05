@@ -1,23 +1,42 @@
 <template>
-  <div class="list">
-    <span
-      v-for="filter of SEX_FILTERS"
-      :key="filter._id"
-      class="list__item"
-      :class="{ list__item_selected: filters.sex === filter._id }"
-      @click="setFilter('sex', filter._id)"
-    >
-      <p>{{ filter.value }}</p>
-    </span>
-    <span
-      v-for="filter of CLOTHES_FILTERS"
-      :key="filter._id"
-      class="list__item"
-      :class="{ list__item_selected: filters.clothes === filter._id }"
-      @click="setFilter('clothes', filter._id)"
-    >
-      <p>{{ filter.value }}</p>
-    </span>
+  <div class="list__wrapper">
+    <h6 class="list__subtitle">
+      <slot name="categorySubtitle" />
+    </h6>
+    <div class="list">
+      <span
+        v-for="filter of SEX_FILTERS"
+        :key="filter._id"
+        class="list__item"
+        :class="{ list__item_selected: filters.sex === filter._id }"
+        @click="setFilter('sex', filter._id)"
+      >
+        <p>{{ filter.value }}</p>
+      </span>
+      <span
+        v-for="filter of CLOTHES_FILTERS"
+        :key="filter._id"
+        class="list__item"
+        :class="{ list__item_selected: filters.clothes === filter._id }"
+        @click="setFilter('clothes', filter._id)"
+      >
+        <p>{{ filter.value }}</p>
+      </span>
+    </div>
+    <h6 class="list__subtitle">
+      <slot name="priceSubtitle" />
+    </h6>
+    <div v-if="priceFilters" class="list">
+      <span
+        v-for="filter of PRICE_FILTERS"
+        :key="filter._id"
+        class="list__item"
+        :class="{ list__item_selected: filters.price === filter._id }"
+        @click="setFilter('price', filter._id)"
+      >
+        <p>{{ filter.value }}</p>
+      </span>
+    </div>
   </div>
 </template>
 
@@ -28,21 +47,33 @@ export default {
   name: 'ClothesFilterList',
 
   props: {
-    selectedFilters: Array,
-    validator: (value) => {
-      return value.lenght <= 2 && value.every((el) => typeof el === 'string')
+    selectedFilters: {
+      type: Array,
+      validator: (value) => {
+        return value.length <= 3 && value.every((el) => typeof el === 'string')
+      }
+    },
+
+    priceFilters: {
+      type: Boolean,
+      default: false
     }
   },
 
   data: () => ({
     filters: {
       sex: '',
-      clothes: ''
+      clothes: '',
+      price: ''
     }
   }),
 
   computed: {
-    ...mapGetters('clothesFilters', ['SEX_FILTERS', 'CLOTHES_FILTERS'])
+    ...mapGetters('clothesFilters', [
+      'SEX_FILTERS',
+      'CLOTHES_FILTERS',
+      'PRICE_FILTERS'
+    ])
   },
 
   methods: {
@@ -59,10 +90,13 @@ export default {
     selectedFilters() {
       for (let filter of this.selectedFilters) {
         const sexFilters = this.SEX_FILTERS.map((filter) => filter._id)
+        const clothesFilters = this.CLOTHES_FILTERS.map((filter) => filter._id)
         if (sexFilters.includes(filter)) {
           this.filters.sex = filter
-        } else {
+        } else if (clothesFilters.includes(filter)) {
           this.filters.clothes = filter
+        } else {
+          this.filters.price = filter
         }
       }
     }
@@ -87,6 +121,15 @@ export default {
     &:hover {
       border: 1px solid $border-selected;
     }
+  }
+
+  &__subtitle {
+    margin-bottom: 7px;
+    font-size: 16px;
+  }
+
+  &:not(:last-of-type) {
+    margin-bottom: 26px;
   }
 }
 </style>
