@@ -5,7 +5,7 @@
       :key="$uuid(number)"
       :class="
         'pagination__button ' +
-        `${number === page ? 'pagination__button_current' : ''}` +
+        `${number === currentPage ? 'pagination__button_current' : ''}` +
         `${number === '...' ? 'pagination__button_disabled' : ''}`
       "
       @click="input(number)"
@@ -28,7 +28,7 @@ export default {
       }
     },
 
-    value: {
+    currentPage: {
       type: Number,
       required: true,
       validator: (value) => {
@@ -36,10 +36,6 @@ export default {
       }
     }
   },
-
-  data: () => ({
-    page: 1
-  }),
 
   computed: {
     range() {
@@ -49,15 +45,18 @@ export default {
     pagination() {
       if (this.pageCount <= 9) {
         return this.range
-      } else if (this.page >= 6 && this.page < this.pageCount - 2) {
+      } else if (
+        this.currentPage >= 6 &&
+        this.currentPage < this.pageCount - 2
+      ) {
         return [
           1,
           '...',
-          ...this.range.slice(this.page - 3, this.page + 2),
+          ...this.range.slice(this.currentPage - 3, this.currentPage + 2),
           '...',
           this.pageCount
         ]
-      } else if (this.page >= this.pageCount - 2) {
+      } else if (this.currentPage >= this.pageCount - 2) {
         return [1, '...', ...this.range.slice(this.pageCount - 7)]
       } else {
         return [...this.range.slice(0, 7), '...', this.pageCount]
@@ -68,23 +67,9 @@ export default {
   methods: {
     input(number) {
       if (number !== '...') {
-        this.page = number
+        this.$emit('change', number)
       }
     }
-  },
-
-  watch: {
-    value(value) {
-      this.page = value
-    },
-
-    page(value) {
-      this.$emit('input', value)
-    }
-  },
-
-  mounted() {
-    this.page = this.value
   }
 }
 </script>

@@ -26,8 +26,9 @@
     <footer class="index__footer">
       <Pagination
         v-if="pageCount"
-        v-model="currentPage"
         :pageCount="pageCount"
+        :currentPage="currentPage"
+        @change="onPageChange"
       />
     </footer>
   </div>
@@ -54,7 +55,14 @@ export default {
   }),
 
   computed: {
-    ...mapGetters('user', ['ID'])
+    ...mapGetters('user', ['ID']),
+
+    query() {
+      return {
+        sellerId: this.ID,
+        page: this.currentPage
+      }
+    }
   },
 
   methods: {
@@ -65,6 +73,12 @@ export default {
       this.filters = [...Object.values(selectedFilters)].filter(
         (filter) => filter
       )
+    },
+
+    onPageChange(number) {
+      this.currentPage = number
+      this.$router.replace({ name: 'Lots', query: { page: number } })
+      this.GET_CLOTHES_ITEMS(this.query)
     }
   },
 
@@ -84,29 +98,18 @@ export default {
         this.loading = false
       },
       deep: true
-    },
-
-    async currentPage(value) {
-      this.loading = true
-
-      const { headers } = await this.GET_CLOTHES_ITEMS({
-        sellerId: this.ID,
-        filters: this.filters,
-        page: value
-      })
-      this.pageCount = Number(headers['x-pagination-page-count'])
-
-      this.loading = false
     }
   },
 
   async mounted() {
     await this.GET_CLOTHES_FILTERS()
 
-    const { headers } = await this.GET_CLOTHES_ITEMS({
-      sellerId: this.ID,
-      filters: this.filters
-    })
+    const page = this.$route.query.page
+    if (page) {
+      this.currentPage = page
+    }
+
+    const { headers } = await this.GET_CLOTHES_ITEMS(this.query)
     this.pageCount = Number(headers['x-pagination-page-count'])
 
     this.loading = false
