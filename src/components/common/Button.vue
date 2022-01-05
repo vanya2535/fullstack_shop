@@ -48,6 +48,7 @@ export default {
 
   &_text {
     border: none;
+    color: $primary;
     background: inherit;
   }
 }

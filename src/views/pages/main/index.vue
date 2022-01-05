@@ -5,7 +5,14 @@
     <h6 class="index__title">You can pick anything want you want</h6>
 
     <main class="index__main">
+      <template v-if="loading">
+        <BackgroundWrapper />
+
+        <SpinLoading stroke="primary" size="85" class="index__spin-loading" />
+      </template>
+
       <ClothesFilterList
+        v-else
         priceFilters
         :selectedFilters="filters"
         @change="filters = $event"
@@ -58,6 +65,8 @@ export default {
     } else if (typeof filters === 'object') {
       this.filters = filters
     }
+
+    this.loading = false
   }
 }
 </script>
@@ -73,6 +82,11 @@ export default {
 
   &__title {
     margin-top: 55px;
+  }
+
+  &__spin-loading {
+    display: block;
+    margin: 0 auto;
   }
 
   &__main {

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from '@/views/pages/index/index'
 import Main from '@/views/pages/main/index'
+import MainSearch from '@/views/pages/main/search'
 import Profile from '@/views/pages/profile/index'
 import ProfileEdit from '@/views/pages/profile/edit'
 import Lots from '@/views/pages/lots/index'
@@ -22,6 +23,14 @@ const routes = [
     path: '/main',
     name: 'Main',
     component: Main,
+    meta: {
+      auth: true
+    }
+  },
+  {
+    path: '/main/search',
+    name: 'MainSearch',
+    component: MainSearch,
     meta: {
       auth: true
     }

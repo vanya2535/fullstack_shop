@@ -1,16 +1,15 @@
 <template>
   <div class="index">
     <header class="index__header">
-      <Logo class="index__logo" width="137" />
-
-      <Button @click="$router.push({ name: 'LotsCreate' })">Add lot</Button>
+      <Logo width="137" />
     </header>
 
     <main class="index__main">
       <ClothesFilterList
         class="index__filter-list"
+        readonly
         :selectedFilters="filters"
-        @change="onFilterChange"
+        @redirect="redirect"
       />
 
       <template v-if="loading">
@@ -20,7 +19,6 @@
       </template>
 
       <template v-else>
-        <h6 class="index__subtitle">Your lots</h6>
         <ClothesItemList class="index__clothes-item-list" />
       </template>
     </main>
@@ -37,15 +35,15 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import ClothesItemList from '@/components/lots/ClothesItemList.vue'
+import ClothesFilterList from '@/components/lots/ClothesFilterList.vue'
 import Logo from '@/assets/img/logo.svg'
-import { mapActions, mapGetters } from 'vuex'
-import ClothesFilterList from '@/components/lots/ClothesFilterList'
-import ClothesItemList from '@/components/lots/ClothesItemList'
 
 export default {
-  name: 'Index',
+  name: 'Search',
 
-  components: { Logo, ClothesFilterList, ClothesItemList },
+  components: { Logo, ClothesItemList, ClothesFilterList },
 
   data: () => ({
     loading: true,
@@ -57,13 +55,10 @@ export default {
   }),
 
   computed: {
-    ...mapGetters('user', ['ID']),
-
     query() {
       return {
-        sellerId: this.ID,
-        page: this.currentPage,
-        filters: this.filters
+        filters: this.filters,
+        page: this.currentPage
       }
     }
   },
@@ -74,7 +69,7 @@ export default {
 
     updateURL() {
       this.$router.replace({
-        name: 'Lots',
+        name: 'MainSearch',
         query: { page: this.currentPage, filters: this.filters }
       })
     },
@@ -91,15 +86,13 @@ export default {
       this.loading = false
     },
 
-    onFilterChange(filters) {
-      this.filters = filters
-      this.currentPage = 1
-      this.getData()
-    },
-
     onPageChange(page) {
       this.currentPage = page
       this.getData()
+    },
+
+    redirect() {
+      this.$router.push({ name: 'Main', params: { filters: this.filters } })
     }
   },
 
@@ -108,7 +101,7 @@ export default {
 
     const page = this.$route.query.page
     if (page) {
-      this.currentPage = Number(page)
+      this.currentPage = page
     }
 
     const filters = this.$route.query.filters
@@ -136,17 +129,7 @@ export default {
 
   &__header {
     display: flex;
-    align-items: center;
     justify-content: center;
-  }
-
-  &__logo {
-    margin-right: 80px;
-  }
-
-  &__subtitle {
-    margin-top: 24px;
-    color: $primary;
   }
 
   &__main {

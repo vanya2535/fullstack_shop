@@ -67,6 +67,8 @@ class ClothesItemController {
 
       if (sellerId) {
         query['seller._id'] = Types.ObjectId(sellerId)
+      } else {
+        query['seller._id'] = { $ne: Types.ObjectId(req.headers.authorization) }
       }
 
       if (filters) {

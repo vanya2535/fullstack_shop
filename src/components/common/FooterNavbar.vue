@@ -5,33 +5,34 @@
         v-if="ROLE === 'SELLER'"
         class="navbar__section navbar__section_l"
         :class="{
-          navbar__section_selected: ['Lots', 'LotsCreate'].includes($route.name)
+          navbar__section_selected: isSelected('Lots')
         }"
         @click="$router.push({ name: 'Lots' })"
       >
         <h6 class="navbar__value">Lots</h6>
       </div>
+
       <div
         v-if="ROLE === 'USER'"
         class="navbar__section navbar__section_l"
-        :class="{ navbar__section_selected: $route.name === 'Orders' }"
+        :class="{ navbar__section_selected: isSelected('Orders') }"
         @click="$router.push({ name: 'Orders' })"
       >
         <h6 class="navbar__value">Add lot</h6>
       </div>
+
       <div
         class="navbar__section navbar__section"
-        :class="{ navbar__section_selected: $route.name === 'Main' }"
+        :class="{ navbar__section_selected: isSelected('Main') }"
         @click="$router.push({ name: 'Main' })"
       >
         <h6 class="navbar__value">main</h6>
       </div>
+
       <div
         class="navbar__section navbar__section_r"
         :class="{
-          navbar__section_selected: ['Profile', 'ProfileEdit'].includes(
-            $route.name
-          )
+          navbar__section_selected: isSelected('Profile')
         }"
         @click="$router.push({ name: 'Profile' })"
       >
@@ -49,6 +50,12 @@ export default {
 
   computed: {
     ...mapGetters('user', ['ROLE'])
+  },
+
+  methods: {
+    isSelected(section) {
+      return this.$route.name.includes(section)
+    }
   }
 }
 </script>
