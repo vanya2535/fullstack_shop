@@ -58,6 +58,7 @@ export default {
   },
 
   methods: {
+    ...mapActions('clothesFilters', ['GET_CLOTHES_FILTERS']),
     ...mapActions('clothesItems', ['GET_CLOTHES_ITEMS']),
 
     onFilterSelect(selectedFilters) {
@@ -100,6 +101,8 @@ export default {
   },
 
   async mounted() {
+    await this.GET_CLOTHES_FILTERS()
+
     const { headers } = await this.GET_CLOTHES_ITEMS({
       sellerId: this.ID,
       filters: this.filters
