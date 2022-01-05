@@ -4,8 +4,8 @@
       v-for="filter of SEX_FILTERS"
       :key="filter._id"
       class="list__item"
-      :class="{ list__item_selected: selectedFilters.sex === filter._id }"
-      @click="selectedFilters.sex = filter._id"
+      :class="{ list__item_selected: filters.sex === filter._id }"
+      @click="setFilter('sex', filter._id)"
     >
       <p>{{ filter.value }}</p>
     </span>
@@ -13,8 +13,8 @@
       v-for="filter of CLOTHES_FILTERS"
       :key="filter._id"
       class="list__item"
-      :class="{ list__item_selected: selectedFilters.clothes === filter._id }"
-      @click="selectedFilters.clothes = filter._id"
+      :class="{ list__item_selected: filters.clothes === filter._id }"
+      @click="setFilter('clothes', filter._id)"
     >
       <p>{{ filter.value }}</p>
     </span>
@@ -27,8 +27,15 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'ClothesFilterList',
 
+  props: {
+    selectedFilters: Array,
+    validator: (value) => {
+      return value.lenght <= 2 && value.every((el) => typeof el === 'string')
+    }
+  },
+
   data: () => ({
-    selectedFilters: {
+    filters: {
       sex: '',
       clothes: ''
     }
@@ -38,12 +45,26 @@ export default {
     ...mapGetters('clothesFilters', ['SEX_FILTERS', 'CLOTHES_FILTERS'])
   },
 
+  methods: {
+    setFilter(key, value) {
+      this.filters[key] = value
+      this.$emit(
+        'change',
+        Object.values(this.filters).filter((filter) => filter)
+      )
+    }
+  },
+
   watch: {
-    selectedFilters: {
-      handler(value) {
-        this.$emit('select', value)
-      },
-      deep: true
+    selectedFilters() {
+      for (let filter of this.selectedFilters) {
+        const sexFilters = this.SEX_FILTERS.map((filter) => filter._id)
+        if (sexFilters.includes(filter)) {
+          this.filters.sex = filter
+        } else {
+          this.filters.clothes = filter
+        }
+      }
     }
   }
 }

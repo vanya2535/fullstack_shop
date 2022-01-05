@@ -7,7 +7,11 @@
     </header>
 
     <main class="index__main">
-      <ClothesFilterList class="index__filter-list" @select="onFilterSelect" />
+      <ClothesFilterList
+        class="index__filter-list"
+        :selectedFilters="filters"
+        @change="onFilterChange"
+      />
 
       <BackgroundWrapper v-if="loading" />
 
@@ -60,7 +64,8 @@ export default {
     query() {
       return {
         sellerId: this.ID,
-        page: this.currentPage
+        page: this.currentPage,
+        filters: this.filters
       }
     }
   },
@@ -69,35 +74,34 @@ export default {
     ...mapActions('clothesFilters', ['GET_CLOTHES_FILTERS']),
     ...mapActions('clothesItems', ['GET_CLOTHES_ITEMS']),
 
-    onFilterSelect(selectedFilters) {
-      this.filters = [...Object.values(selectedFilters)].filter(
-        (filter) => filter
-      )
+    updateURL() {
+      this.$router.replace({
+        name: 'Lots',
+        query: { page: this.currentPage, filters: this.filters }
+      })
     },
 
-    onPageChange(number) {
-      this.currentPage = number
-      this.$router.replace({ name: 'Lots', query: { page: number } })
-      this.GET_CLOTHES_ITEMS(this.query)
-    }
-  },
+    async getData() {
+      this.loading = true
 
-  watch: {
-    filters: {
-      async handler(value) {
-        this.loading = true
+      const { headers } = await this.GET_CLOTHES_ITEMS(this.query)
+      this.pageCount = Number(headers['x-pagination-page-count'])
+      this.currentPage = Number(headers['x-pagination-current-page'])
 
-        const { headers } = await this.GET_CLOTHES_ITEMS({
-          sellerId: this.ID,
-          filters: value
-        })
+      this.updateURL()
 
-        this.pageCount = Number(headers['x-pagination-page-count'])
-        this.currentPage = Number(headers['x-pagination-current-page'])
+      this.loading = false
+    },
 
-        this.loading = false
-      },
-      deep: true
+    onFilterChange(filters) {
+      this.filters = filters
+      this.currentPage = 1
+      this.getData()
+    },
+
+    onPageChange(page) {
+      this.currentPage = page
+      this.getData()
     }
   },
 
@@ -109,8 +113,16 @@ export default {
       this.currentPage = Number(page)
     }
 
+    const filters = this.$route.query.filters
+    if (typeof filters === 'string') {
+      this.filters = [filters]
+    } else if (typeof filters === 'object') {
+      this.filters = filters
+    }
+
     const { headers } = await this.GET_CLOTHES_ITEMS(this.query)
     this.pageCount = Number(headers['x-pagination-page-count'])
+    this.currentPage = Number(headers['x-pagination-current-page'])
 
     this.loading = false
   }
