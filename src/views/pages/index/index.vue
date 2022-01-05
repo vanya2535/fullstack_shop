@@ -1,14 +1,17 @@
 <template>
   <div class="index">
     <Header />
+
     <main class="index__main">
       <h6 class="index__description">
         Wherever you’re going, it is important that you get there in style!
       </h6>
     </main>
+
     <footer class="index__footer block justify-center">
       <EnterButton @click="enterButtonClick" />
     </footer>
+
     <EnterModal v-model="isEnterModalVisible" />
   </div>
 </template>

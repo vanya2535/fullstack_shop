@@ -67,7 +67,7 @@ export default {
       this.content = value
     },
 
-    content(value, oldValue) {
+    content(value, prev) {
       this.$emit('input', value)
     }
   },

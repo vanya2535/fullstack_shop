@@ -1,5 +1,5 @@
 <template>
-  <svg class="spinner" viewBox="0 0 50 50" :width="width" :height="height">
+  <svg class="spinner" viewBox="0 0 50 50" :width="size" :height="size">
     <circle
       circle
       class="path"
@@ -7,6 +7,7 @@
       cy="25"
       r="20"
       fill="none"
+      :stroke="colors[stroke]"
       stroke-width="5"
     ></circle>
   </svg>
@@ -17,16 +18,23 @@ export default {
   name: 'SpinLoading',
 
   props: {
-    width: {
+    size: {
       type: [Number, String],
       default: 14
     },
 
-    height: {
-      type: [Number, String],
-      default: 14
+    stroke: {
+      type: String,
+      default: 'white'
     }
-  }
+  },
+
+  data: () => ({
+    colors: {
+      white: 'fff',
+      primary: '#365099'
+    }
+  })
 }
 </script>
 
@@ -35,7 +43,7 @@ export default {
   animation: rotate 2s linear infinite;
 
   & .path {
-    stroke: $white;
+    // stroke: $white;
     stroke-linecap: round;
     animation: dash 1.5s ease-in-out infinite;
   }

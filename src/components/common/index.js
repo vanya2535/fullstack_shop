@@ -10,6 +10,8 @@ import Header from './Header.vue'
 import ImageInput from './ImageInput.vue'
 import ErrorBlock from './ErrorBlock.vue'
 import DragModal from './DragModal.vue'
+import Pagination from './Pagination.vue'
+import BackgroundWrapper from './BackgroundWrapper.vue'
 
 export default [
   Dialog,
@@ -23,5 +25,7 @@ export default [
   Header,
   ImageInput,
   ErrorBlock,
-  DragModal
+  DragModal,
+  Pagination,
+  BackgroundWrapper
 ]

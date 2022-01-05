@@ -1,11 +1,11 @@
 export default {
   async GET_CLOTHES_ITEMS({ commit }, payload) {
     try {
-      const { data } = await this._vm.$api.get('/clothes-item', {
-        params: { sellerId: payload }
+      const { data, headers } = await this._vm.$api.get('/clothes-item', {
+        params: payload
       })
       commit('SET_CLOTHES_ITEMS', data)
-      return Promise.resolve(data)
+      return Promise.resolve({ data, headers })
     } catch (e) {
       return Promise.reject(e)
     }
