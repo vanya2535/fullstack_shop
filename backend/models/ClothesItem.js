@@ -6,7 +6,8 @@ const ClothesItem = new Schema({
   name: { type: String, required: true },
   brand: String,
   price: { type: Number, required: true },
-  filters: [{ type: String, ref: 'ClothesFilter' }]
+  filters: [{ type: String, ref: 'ClothesFilter' }],
+  date: { type: Number, required: true }
 })
 
 module.exports = model('ClothesItem', ClothesItem)

@@ -1,3 +1,4 @@
+const dayjs = require('dayjs')
 const { Types } = require('mongoose')
 const fileService = require('../service/fileService.js')
 const ClothesItem = require('../models/ClothesItem.js')
@@ -48,7 +49,8 @@ class ClothesItemController {
         name,
         brand,
         price,
-        filters: parsedFilters
+        filters: parsedFilters,
+        date: dayjs()
       })
       await clothesItem.save()
       return resp.json(clothesItem)
@@ -78,6 +80,7 @@ class ClothesItemController {
       }
 
       const clothesItems = await ClothesItem.find(query)
+        .sort('-date')
         .skip(20 * (page - 1 || 0))
         .limit(20)
 
