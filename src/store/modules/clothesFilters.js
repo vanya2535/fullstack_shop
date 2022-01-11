@@ -4,9 +4,9 @@ import clothesFiltersMutations from './mutations/clothesFiltersMutations'
 
 export default {
   state: () => ({
-    sexFilters: null,
-    clothesFilters: null,
-    priceFilters: null
+    sexFilters: [],
+    clothesFilters: [],
+    priceFilters: []
   }),
   actions: clothesFiltersActions,
   mutations: clothesFiltersMutations,

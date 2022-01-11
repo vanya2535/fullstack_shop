@@ -10,7 +10,7 @@ export default {
     avatar: null,
     firstname: null,
     lastname: null,
-    links: null
+    links: []
   }),
   actions: userActions,
   mutations: userMutations,

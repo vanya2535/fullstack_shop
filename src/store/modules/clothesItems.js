@@ -4,7 +4,7 @@ import clothesItemsMutations from './mutations/clothesItemsMutations'
 
 export default {
   state: () => ({
-    clothesItems: null
+    clothesItems: []
   }),
   actions: clothesItemsActions,
   mutations: clothesItemsMutations,
