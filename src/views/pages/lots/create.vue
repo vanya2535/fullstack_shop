@@ -39,7 +39,7 @@
 
         <ClothesFilterList
           class="edit-form__filters"
-          @select="onFilterSelect"
+          @change="onFilterSelect"
         />
 
         <ErrorBlock v-if="errors.image" :errorMessage="errors.image" />
@@ -127,8 +127,8 @@ export default {
     ...mapActions('clothesFilters', ['GET_CLOTHES_FILTERS']),
     ...mapActions('clothesItems', ['CREATE_CLOTHES_ITEM']),
 
-    onFilterSelect(selectedFilters) {
-      this.formdata.filters = [...Object.values(selectedFilters)]
+    onFilterSelect(filters) {
+      this.formdata.filters = filters
       this.errors.filters = null
     },
 
