@@ -29,21 +29,28 @@ app.use('/role', roleRouter)
 app.use('/clothes-filter', clothesFilterRouter)
 app.use('/clothes-item', clothesItemRouter)
 
-// const { createServer } = require('http')
-// const { Server } = require('socket.io')
-// const httpServer = createServer(app)
-// const io = new Server(httpServer, {
-//   /* options */
-// })
+const { createServer } = require('http')
+const { Server } = require('socket.io')
+const httpServer = createServer(app)
 
-// io.on('connection', (socket) => {
-//   console.log('socket connected')
-// })
+const io = new Server(httpServer, {
+  cors: {
+    origin: 'http://localhost:8080'
+  }
+})
+
+const registerDialogHandlers = require('./handlers/dialogHandlers')
+
+const onConnection = (socket) => {
+  registerDialogHandlers(io, socket)
+}
+
+io.on('connection', onConnection)
 
 async function start() {
   try {
     await mongoose.connect(DB_URL).then(() => console.log('Bd connected'))
-    app.listen(PORT, () =>
+    httpServer.listen(PORT, () =>
       console.log('Server started on http://localhost:' + PORT)
     )
   } catch (e) {
