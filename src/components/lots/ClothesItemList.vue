@@ -5,7 +5,7 @@
       :key="item._id"
       class="list__item"
       :class="{ list__item_selected: item._id === selectedItem }"
-      @click="selectedItem = item._id"
+      @click="selectItem(item._id)"
     >
       <img
         :src="`http://localhost:3000/${item.image}`"
@@ -34,6 +34,18 @@ export default {
 
   computed: {
     ...mapGetters('clothesItems', ['CLOTHES_ITEMS'])
+  },
+
+  methods: {
+    selectItem(id) {
+      this.selectedItem = this.selectedItem !== id ? id : ''
+    }
+  },
+
+  watch: {
+    selectedItem(value) {
+      this.$emit('select', value)
+    }
   }
 }
 </script>
@@ -52,6 +64,7 @@ export default {
     width: 311px;
     box-shadow: 0 4px 4px $shadow;
     background: $white-contrast;
+    cursor: pointer;
 
     &_selected {
       background: $background-selected;

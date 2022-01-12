@@ -19,7 +19,10 @@
       </template>
 
       <template v-else>
-        <ClothesItemList class="index__clothes-item-list" />
+        <ClothesItemList
+          class="index__clothes-item-list"
+          @select="selectedItem = $event"
+        />
       </template>
     </main>
 
@@ -31,6 +34,8 @@
         @change="onPageChange"
       />
     </footer>
+
+    <SnackButton v-model="snackButton" />
   </div>
 </template>
 
@@ -39,14 +44,18 @@ import { mapActions } from 'vuex'
 import ClothesItemList from '@/components/lots/ClothesItemList.vue'
 import ClothesFilterList from '@/components/lots/ClothesFilterList.vue'
 import Logo from '@/assets/img/logo.svg'
+import SnackButton from '@/components/main/SnackButton.vue'
 
 export default {
   name: 'Search',
 
-  components: { Logo, ClothesItemList, ClothesFilterList },
+  components: { Logo, ClothesItemList, ClothesFilterList, SnackButton },
 
   data: () => ({
     loading: true,
+    snackButton: false,
+
+    selectedItem: null,
 
     pageCount: null,
     currentPage: 1,
@@ -76,6 +85,7 @@ export default {
 
     async getData() {
       this.loading = true
+      this.selectedItem = ''
 
       const { headers } = await this.GET_CLOTHES_ITEMS(this.query)
       this.pageCount = Number(headers['x-pagination-page-count'])
@@ -93,6 +103,16 @@ export default {
 
     redirect() {
       this.$router.push({ name: 'Main', params: { filters: this.filters } })
+    }
+  },
+
+  watch: {
+    selectedItem(value) {
+      this.snackButton = false
+
+      if (value) {
+        this.snackButton = true
+      }
     }
   },
 
