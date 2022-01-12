@@ -123,15 +123,19 @@ export default {
     },
 
     selectFilters() {
-      for (let filter of this.selectedFilters) {
-        const sexFilters = this.SEX_FILTERS.map((filter) => filter._id)
-        const clothesFilters = this.CLOTHES_FILTERS.map((filter) => filter._id)
-        if (sexFilters.includes(filter)) {
-          this.filters.sex = filter
-        } else if (clothesFilters.includes(filter)) {
-          this.filters.clothes = filter
-        } else {
-          this.filters.price = filter
+      if (this.selectedFilters) {
+        for (let filter of this.selectedFilters) {
+          const sexFilters = this.SEX_FILTERS.map((filter) => filter._id)
+          const clothesFilters = this.CLOTHES_FILTERS.map(
+            (filter) => filter._id
+          )
+          if (sexFilters.includes(filter)) {
+            this.filters.sex = filter
+          } else if (clothesFilters.includes(filter)) {
+            this.filters.clothes = filter
+          } else {
+            this.filters.price = filter
+          }
         }
       }
     }
