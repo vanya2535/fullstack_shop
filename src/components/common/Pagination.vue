@@ -66,7 +66,7 @@ export default {
 
   methods: {
     input(number) {
-      if (number !== '...') {
+      if (number !== '...' && this.currentPage !== number) {
         this.$emit('change', Number(number))
       }
     }
